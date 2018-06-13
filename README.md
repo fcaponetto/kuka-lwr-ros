@@ -7,8 +7,9 @@ A ROS package to control the KUKA LWR 4 (both simulation and physical robot). **
 
 # Installation
 Do the following steps:
-* In your catkin src directory clone the repository
 ```
+mkdir -p catkin_ws/src
+cd catkin_ws/src
 $ git clone https://github.com/fcaponetto/kuka-lwr-ros.git
 ```
 * wstool gets all other git repository dependencies, after the following steps you should see extra catkin 
@@ -27,6 +28,47 @@ $ rosdep install --from-paths . --ignore-src --rosdistro kinetic
 instructions on how to install it on ubuntu. Make sure that the ros libraries of Gazebo are also installed:
 ```
 $ sudo apt-get install ros-kinetic-gazebo7-*
+```
+
+## Build System
+
+* catkin is the ROS build system to generate executables, libraries, and interfaces
+* We suggest to use the Catkin Command Line Tools.  
+
+Use **catkin build** instead of **catkin_make**.  
+Navigate to your catkin workspace with:
+```
+> cd ~/catkin_ws
+```
+Build specific package with:
+```
+> catkin build package_name 
+```
+Or all packages with:
+```
+> catkin build
+```
+Whenever you build a new package, update your environment:
+```
+> source devel/setup.bash
+```
+If necessary, clean the entire build and devel space with:
+```
+> catkin clean
+```
+
+## Clion integration
+Create a CMakelists.txt in catkin_ws folder in oder to include the src subfolder:
+```
+project(kuka)
+cmake_minimum_required(VERSION 3.5)
+set (CMAKE_CXX_STANDARD 14)
+
+#TODO find a way to link the executable directly to standard ros folder instead that cmake-build-debug (Clion defauld output)
+#set(CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}/../install")
+#set(CATKIN_DEVEL_PREFIX "${CMAKE_SOURCE_DIR}/../devel")
+
+add_subdirectory(src)
 ```
 
 # Description
