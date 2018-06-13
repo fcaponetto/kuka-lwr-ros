@@ -8,8 +8,9 @@ A ROS package to control the KUKA LWR 4 (both simulation and physical robot). **
 # Installation
 Do the following steps:
 ```
-mkdir -p catkin_ws/src
-cd catkin_ws/src
+$ mkdir -p catkin_ws/src
+$ cd catkin_ws/src
+$ catkin_init_workspace
 $ git clone https://github.com/fcaponetto/kuka-lwr-ros.git
 ```
 * wstool gets all other git repository dependencies, after the following steps you should see extra catkin 
