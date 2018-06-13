@@ -25,11 +25,11 @@
   <!-- ROBOT -->
 
   <group ns="lwr">
-    <param name="robot_description" command="$(find xacro)/xacro.py $(arg robot_urdf_file)"/>
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg robot_urdf_file)"/>
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
   </group>
 
-  <!-- GAZEBO -->
+  <!-- LAUNCH GAZEBO with gui=true -->
   <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param /lwr/robot_description -urdf -model $(arg robot_name)" respawn="false" output="screen" />
   <!-- enable/disable gui at will, the rviz listens to the simulation -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
