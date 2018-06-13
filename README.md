@@ -1,15 +1,15 @@
 
 # kuka-lwr-ros
-[![Build Status](https://travis-ci.com/epfl-lasa/kuka-lwr-ros.svg?token=d6T2YmvspfmdmqrMCGYv&branch=master)](https://travis-ci.com/epfl-lasa/kuka-lwr-ros/branches)
+[![Build Status](https://travis-ci.com/fcaponetto/kuka-lwr-ros.svg?token=d6T2YmvspfmdmqrMCGYv&branch=master)](https://travis-ci.com/fcaponetto/kuka-lwr-ros/branches)
 
-A ROS package to control the KUKA LWR 4 (both simulation and physical robot). **This was originally forked from** [CentroEPiaggio/kuka-lwr](https://github.com/CentroEPiaggio/kuka-lwr).
+A ROS package to control the KUKA LWR 4 (both simulation and physical robot). **This was originally forked from** [CentroEPiaggio/kuka-lwr](https://github.com/CentroEPiaggio/kuka-lwr). and **at a later time** from [epfl-lasa/kuka-lwr](https://github.com/epfl-lasa/kuka-lwr-ros)
 
 
 # Installation
 Do the following steps:
 * In your catkin src directory clone the repository
 ```
-$ git clone https://github.com/epfl-lasa/kuka-lwr-ros.git
+$ git clone https://github.com/fcaponetto/kuka-lwr-ros.git
 ```
 * wstool gets all other git repository dependencies, after the following steps you should see extra catkin 
   packages in your src directory.
@@ -20,35 +20,31 @@ $  wstool up
 ```
 * Query and installs all libraries and packages 
 ```
-$ rosdep install --from-paths . --ignore-src --rosdistro indigo 
+$ rosdep install --from-paths . --ignore-src --rosdistro kinetic 
 ```
 
 * Install [**Gazebo**](http://gazebosim.org/), follow this [**link**](http://gazebosim.org/tutorials?tut=install_ubuntu&) for 
 instructions on how to install it on ubuntu. Make sure that the ros libraries of Gazebo are also installed:
 ```
-$ sudo apt-get install ros-indigo-gazeboX-*
+$ sudo apt-get install ros-kinetic-gazebo7-*
 ```
-#### Software Version Combinations
-- ROS-Indigo + Gazebo2 (If you are having troubles starting-up the simulation, you need to install Gazebo7)
-- ROS-Kinetic + Gazebo7
-
 
 # Description
 
 Set of packages for simulating and controlling the KUKA Light Weight Robot (LWR).
 
 
-* [**kuka_lwr**](https://github.com/epfl-lasa/kuka-lwr-ros/tree/master/kuka_lwr) contains URDF robot description, hardware interface, controllers with configuration files.
+* [**kuka_lwr**](https://github.com/fcaponetto/kuka-lwr-ros/tree/master/kuka_lwr) contains URDF robot description, hardware interface, controllers with configuration files.
 
-* [**lwr_ros_client**](https://github.com/epfl-lasa/kuka-lwr-ros/tree/master/lwr_ros_client) basic implemenation of action handling such that it is easy to call different types of policies.
+* [**lwr_ros_client**](https://github.com/fcaponetto/kuka-lwr-ros/tree/master/lwr_ros_client) basic implemenation of action handling such that it is easy to call different types of policies.
 
-* [**robot_motion_generation**](https://github.com/epfl-lasa/kuka-lwr-ros/tree/master/robot_motion_generation)  utilities such as filters for smoothing robot motion.
+* [**robot_motion_generation**](https://github.com/fcaponetto/kuka-lwr-ros/tree/master/robot_motion_generation)  utilities such as filters for smoothing robot motion.
 
-* [**kuka-lwr-ros-examples**](https://github.com/epfl-lasa/kuka-lwr-ros-examples) set of examples.
+* [**kuka-lwr-ros-examples**](https://github.com/fcaponetto/kuka-lwr-ros-examples) set of examples.
 
 
 # Quick Start (Simulation)
-Download the [**kuka-lwr-ros-examples**](https://github.com/epfl-lasa/kuka-lwr-ros-examples) into your catkin_ws and 
+Download the [**kuka-lwr-ros-examples**](https://github.com/fcaponetto/kuka-lwr-ros-examples) into your catkin_ws and 
 after compling them are ready to run the lwr_simple_example. 
 
 Open a new terminal and run the following:
@@ -82,7 +78,7 @@ simple example case are; **go_front**, **go_home**,
 
 # Quick start (real robot)
 You first have to make sure that your network configurations are set correctly and you can ping the robot. 
-If you are unsure about this, take a look at [**Network setup**](https://github.com/epfl-lasa/kuka-lwr-ros/wiki/Network-setup)
+If you are unsure about this, take a look at [**Network setup**](https://github.com/fcaponetto/kuka-lwr-ros/wiki/Network-setup)
 
 Once the robot is turned on and you have loaded your script open the FRI such that in the KUKA interface
  you see the following message: **FRI-Ctrl FRI successfully opened**.
