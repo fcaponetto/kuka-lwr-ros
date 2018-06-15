@@ -108,6 +108,10 @@ and in another:
 ```sh
 $ roslaunch lwr_simple_example console.launch
 ```
+or:
+```
+rosservice call /action_client/kuka_action_cmd "name_action" (example linear)
+``
 
 You should have the following triptych view in your console
 ![alt text](readme/console.png "Triptych console view")
