@@ -91,19 +91,19 @@ bool JointControllers::init(hardware_interface::KUKAJointInterface *robot, ros::
 
 
     /// Controllers (joint position ,cartesian velocity/position,..)
-    ff_fb_controller.reset(new controllers::FF_FB_cartesian(nh_,change_ctrl_mode));
-    cartesian_velocity_controller.reset(new controllers::Cartesian_velocity(nh_,change_ctrl_mode,ik_vel_solver_));
-    joint_position_controller.reset(new controllers::Joint_position(nh_,change_ctrl_mode));
-    gravity_compensation_controller.reset(new controllers::Gravity_compensation(nh_,change_ctrl_mode));
+//    ff_fb_controller.reset(new controllers::FF_FB_cartesian(nh_,change_ctrl_mode));
+//    cartesian_velocity_controller.reset(new controllers::Cartesian_velocity(nh_,change_ctrl_mode,ik_vel_solver_));
+//    joint_position_controller.reset(new controllers::Joint_position(nh_,change_ctrl_mode));
+//    gravity_compensation_controller.reset(new controllers::Gravity_compensation(nh_,change_ctrl_mode));
     cartesian_position_controller.reset(new controllers::Cartesian_position(nh_,change_ctrl_mode));
-    passive_ds_controller.reset(new controllers::Passive_ds(nh_,change_ctrl_mode));
+//    passive_ds_controller.reset(new controllers::Passive_ds(nh_,change_ctrl_mode));
 
-    change_ctrl_mode.add(ff_fb_controller.get());
-    change_ctrl_mode.add(cartesian_velocity_controller.get());
-    change_ctrl_mode.add(joint_position_controller.get());
-    change_ctrl_mode.add(gravity_compensation_controller.get());
+//    change_ctrl_mode.add(ff_fb_controller.get());
+//    change_ctrl_mode.add(cartesian_velocity_controller.get());
+//    change_ctrl_mode.add(joint_position_controller.get());
+//    change_ctrl_mode.add(gravity_compensation_controller.get());
     change_ctrl_mode.add(cartesian_position_controller.get());
-    change_ctrl_mode.add(passive_ds_controller.get());
+//    change_ctrl_mode.add(passive_ds_controller.get());
 
     ROS_INFO("JointControllers::init finished initialise [controllers]!");
 
@@ -174,20 +174,20 @@ void JointControllers::update(const ros::Time& time, const ros::Duration& period
 
         switch(ctrl_mode)
         {
-        case CTRL_MODE::CART_VELOCITIY:
-        {
-            ROS_INFO_STREAM_THROTTLE(thrott_time,"ctrl_mode ===> CART_VELOCITIY");
-            cartesian_velocity_controller->cart_vel_update(tau_cmd_,joint_des_,joint_msr_,K_pos_,K_vel_,period,time);
-            robot_ctrl_mode = ROBOT_CTRL_MODE::TORQUE_IMP;
-            break;
-        }
-        case CTRL_MODE::FF_FB_CARTESIAN:
-        {
-            ROS_INFO_STREAM_THROTTLE(thrott_time,"ctrl_mode ===> FF_FB_FORCE");
-            ff_fb_controller->update(tau_cmd_,x_msr_,x_dt_msr_.GetTwist(), J_);
-            robot_ctrl_mode = ROBOT_CTRL_MODE::TORQUE_IMP;
-        break;
-    }
+//        case CTRL_MODE::CART_VELOCITIY:
+//        {
+//            ROS_INFO_STREAM_THROTTLE(thrott_time,"ctrl_mode ===> CART_VELOCITIY");
+//            cartesian_velocity_controller->cart_vel_update(tau_cmd_,joint_des_,joint_msr_,K_pos_,K_vel_,period,time);
+//            robot_ctrl_mode = ROBOT_CTRL_MODE::TORQUE_IMP;
+//            break;
+//        }
+//        case CTRL_MODE::FF_FB_CARTESIAN:
+//        {
+//            ROS_INFO_STREAM_THROTTLE(thrott_time,"ctrl_mode ===> FF_FB_FORCE");
+//            ff_fb_controller->update(tau_cmd_,x_msr_,x_dt_msr_.GetTwist(), J_);
+//            robot_ctrl_mode = ROBOT_CTRL_MODE::TORQUE_IMP;
+//        break;
+//        }
         case CTRL_MODE::CART_POSITION:
         {
             ROS_INFO_STREAM_THROTTLE(thrott_time,"ctrl_mode ===> CART_POSITION");
@@ -195,27 +195,27 @@ void JointControllers::update(const ros::Time& time, const ros::Duration& period
             robot_ctrl_mode = ROBOT_CTRL_MODE::POSITION_IMP;
             break;
         }
-        case CTRL_MODE::JOINT_POSITION:
-        {
-            ROS_INFO_STREAM_THROTTLE(thrott_time,"ctrl_mode ===> JOINT_POSITION");
-            joint_position_controller->update(joint_des_,joint_msr_,period);
-            robot_ctrl_mode = ROBOT_CTRL_MODE::POSITION_IMP;
-            break;
-        }
-        case CTRL_MODE::CART_PASSIVE_DS:
-        {
-            ROS_INFO_STREAM_THROTTLE(thrott_time,"ctrl_mode ===> CART_PASSIVE_DS");
-            passive_ds_controller->update(tau_cmd_,J_,x_dt_msr_.GetTwist(),x_msr_.M,x_msr_.p);
-            robot_ctrl_mode = ROBOT_CTRL_MODE::TORQUE_IMP;
-            break;
-        }
-        case CTRL_MODE::GRAV_COMP:
-        {
-            ROS_INFO_STREAM_THROTTLE(thrott_time,"ctrl_mode ===> GRAV_COMP");
-            gravity_compensation_controller->update(tau_cmd_,pos_cmd_,K_cmd,D_cmd,joint_des_,joint_msr_);
-            robot_ctrl_mode = ROBOT_CTRL_MODE::TORQUE_IMP;
-            break;
-        }
+//        case CTRL_MODE::JOINT_POSITION:
+//        {
+//            ROS_INFO_STREAM_THROTTLE(thrott_time,"ctrl_mode ===> JOINT_POSITION");
+//            joint_position_controller->update(joint_des_,joint_msr_,period);
+//            robot_ctrl_mode = ROBOT_CTRL_MODE::POSITION_IMP;
+//            break;
+//        }
+//        case CTRL_MODE::CART_PASSIVE_DS:
+//        {
+//            ROS_INFO_STREAM_THROTTLE(thrott_time,"ctrl_mode ===> CART_PASSIVE_DS");
+//            passive_ds_controller->update(tau_cmd_,J_,x_dt_msr_.GetTwist(),x_msr_.M,x_msr_.p);
+//            robot_ctrl_mode = ROBOT_CTRL_MODE::TORQUE_IMP;
+//            break;
+//        }
+//        case CTRL_MODE::GRAV_COMP:
+//        {
+//            ROS_INFO_STREAM_THROTTLE(thrott_time,"ctrl_mode ===> GRAV_COMP");
+//            gravity_compensation_controller->update(tau_cmd_,pos_cmd_,K_cmd,D_cmd,joint_des_,joint_msr_);
+//            robot_ctrl_mode = ROBOT_CTRL_MODE::TORQUE_IMP;
+//            break;
+//        }
         default:    // same as grav-comp
         {
             ROS_INFO_STREAM_THROTTLE(thrott_time,"ctrl_mode ===> NONE");

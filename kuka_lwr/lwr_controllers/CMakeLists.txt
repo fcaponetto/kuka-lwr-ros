@@ -15,7 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
   robot_motion_generation
   tf
   dynamic_reconfigure
-  passive_ds_control
+#  passive_ds_control
   eigen_conversions
   lwr_hw
 )
@@ -63,7 +63,7 @@ catkin_package(
     kdl_parser
     message_runtime
     robot_motion_generation
-    passive_ds_control
+#    passive_ds_control
     lwr_hw
   INCLUDE_DIRS include
   LIBRARIES ${PROJECT_NAME}
@@ -76,23 +76,25 @@ set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 include_directories(${INCLUDE_DIR} ${catkin_INCLUDE_DIRS} ${INCLUDE_STATISTICS})
 
 
-set(INC_FILES ${INCLUDE_DIR}/controllers/gravity_compensation.h
-              ${INCLUDE_DIR}/controllers/base_controllers.h
-              ${INCLUDE_DIR}/controllers/joint_position.h
-              ${INCLUDE_DIR}/controllers/cartesian_velocity.h
-              ${INCLUDE_DIR}/controllers/ff_fb_cartesian.h
-              ${INCLUDE_DIR}/controllers/cartesian_position.h
-              ${INCLUDE_DIR}/controllers/change_ctrl_mode.h
-              ${INCLUDE_DIR}/controllers/passive_ds.h
+set(INC_FILES
+#        ${INCLUDE_DIR}/controllers/gravity_compensation.h
+#        ${INCLUDE_DIR}/controllers/base_controllers.h
+#        ${INCLUDE_DIR}/controllers/joint_position.h
+#        ${INCLUDE_DIR}/controllers/cartesian_velocity.h
+#        ${INCLUDE_DIR}/controllers/ff_fb_cartesian.h
+        ${INCLUDE_DIR}/controllers/cartesian_position.h
+#        ${INCLUDE_DIR}/controllers/change_ctrl_mode.h
+#        ${INCLUDE_DIR}/controllers/passive_ds.h
               )
 
-set(SRC_FILES ${SRC_DIR}/controllers/gravity_compensation.cpp
-              ${SRC_DIR}/controllers/joint_position.cpp
-              ${SRC_DIR}/controllers/cartesian_position.cpp
-              ${SRC_DIR}/controllers/cartesian_velocity.cpp
-              ${SRC_DIR}/controllers/ff_fb_cartesian.cpp
-              ${SRC_DIR}/controllers/change_ctrl_mode.cpp
-              ${SRC_DIR}/controllers/passive_ds.cpp
+set(SRC_FILES
+#        ${SRC_DIR}/controllers/gravity_compensation.cpp
+#        ${SRC_DIR}/controllers/joint_position.cpp
+        ${SRC_DIR}/controllers/cartesian_position.cpp
+#        ${SRC_DIR}/controllers/cartesian_velocity.cpp
+#        ${SRC_DIR}/controllers/ff_fb_cartesian.cpp
+#        ${SRC_DIR}/controllers/change_ctrl_mode.cpp
+#        ${SRC_DIR}/controllers/passive_ds.cpp
 )
 
 set(INC_FILES_UTIL

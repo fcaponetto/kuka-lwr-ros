@@ -36,13 +36,13 @@
 
 #include <realtime_tools/realtime_publisher.h>
 
-#include "controllers/gravity_compensation.h"
-#include "controllers/joint_position.h"
-#include "controllers/cartesian_velocity.h"
-#include "controllers/ff_fb_cartesian.h"
+//#include "controllers/gravity_compensation.h"
+//#include "controllers/joint_position.h"
+//#include "controllers/cartesian_velocity.h"
+//#include "controllers/ff_fb_cartesian.h"
 #include "controllers/cartesian_position.h"
-#include "controllers/change_ctrl_mode.h"
-#include "controllers/passive_ds.h"
+//#include "controllers/change_ctrl_mode.h"
+//#include "controllers/passive_ds.h"
 
 #include "utils/definitions.h"
 #include "utils/contact_safety.h"
@@ -92,12 +92,12 @@ namespace lwr_controllers
 	private:
 
         controllers::Change_ctrl_mode                          change_ctrl_mode;
-        boost::scoped_ptr<controllers::FF_FB_cartesian>        ff_fb_controller;
-        boost::scoped_ptr<controllers::Cartesian_velocity>     cartesian_velocity_controller;
+//        boost::scoped_ptr<controllers::FF_FB_cartesian>        ff_fb_controller;
+//        boost::scoped_ptr<controllers::Cartesian_velocity>     cartesian_velocity_controller;
         boost::scoped_ptr<controllers::Cartesian_position>     cartesian_position_controller;
-        boost::scoped_ptr<controllers::Joint_position>         joint_position_controller;
-        boost::scoped_ptr<controllers::Gravity_compensation>   gravity_compensation_controller;
-        boost::scoped_ptr<controllers::Passive_ds>             passive_ds_controller;
+//        boost::scoped_ptr<controllers::Joint_position>         joint_position_controller;
+//        boost::scoped_ptr<controllers::Gravity_compensation>   gravity_compensation_controller;
+//        boost::scoped_ptr<controllers::Passive_ds>             passive_ds_controller;
 
 		ros::Subscriber sub_gains_;
 		ros::Subscriber sub_posture_;
