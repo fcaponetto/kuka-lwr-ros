@@ -22,7 +22,7 @@ $  wstool up
 ```
 * Query and installs all libraries and packages 
 ```
-$ rosdep install --from-paths . --ignore-src --rosdistro kinetic 
+$ rosdep install --from-paths . --ignore-src --rosdistro kinetic --os=ubuntu:xenial
 ```
 
 * Install [**Gazebo**](http://gazebosim.org/), follow this [**link**](http://gazebosim.org/tutorials?tut=install_ubuntu&) for 
