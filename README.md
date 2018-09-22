@@ -57,6 +57,10 @@ If necessary, clean the entire build and devel space with:
 ```
 > catkin clean
 ```
+You might need to install libncurses:
+```
+$ sudo apt-get install libncurses5-dev
+```
 
 ## Clion integration
 Create a CMakelists.txt in catkin_ws folder in oder to include the src subfolder:
