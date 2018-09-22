@@ -63,6 +63,15 @@ $ sudo apt-get install libncurses5-dev
 ```
 
 ## Clion integration
+Modify the exec option [Stackoverflow](https://stackoverflow.com/a/42180498):
+```
+locate jetbrains-clion.desktop
+```
+Open with a editor the path from locate output:
+```
+Exec=bash -i -c "/INSTALL_LOCATION/clion-xxx/bin/clion.sh" %f
+```
+
 Create a CMakelists.txt in catkin_ws folder in oder to include the src subfolder:
 ```
 project(kuka)
