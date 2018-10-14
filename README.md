@@ -84,6 +84,17 @@ set (CMAKE_CXX_STANDARD 14)
 
 add_subdirectory(src)
 ```
+For example, the following is working tree workspace:
+```
+catkin_ws_clion/
+├── CMakeLists.txt
+└── src
+    ├── CMakeLists.txt -> /opt/ros/kinetic/share/catkin/cmake/toplevel.cmake
+    ├── fri-library-ros
+    ├── kuka-lwr-ros
+    ├── kuka-lwr-ros-examples
+    └── passive-ds-control
+```
 
 # Description
 
