@@ -6,6 +6,12 @@
     </description>
   </class>
 
+  <class name="lwr_controllers/PositionController" type="lwr_controllers::PositionController" base_class_type="controller_interface::ControllerBase">
+    <description>
+      Controller ROS interface for many controllers
+    </description>
+  </class>
+
   <class name="lwr_controllers/KUKAJointStateController" type="lwr_controllers::KUKAJointStateController" base_class_type="controller_interface::ControllerBase">
     <description>
       The KUKAJointStateController is for publishing information such as ee_pos and joint pose on ros topics
