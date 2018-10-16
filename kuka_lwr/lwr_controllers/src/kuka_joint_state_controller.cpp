@@ -7,6 +7,7 @@ namespace lwr_controllers
 bool KUKAJointStateController::init(hardware_interface::JointStateInterface* robot, ros::NodeHandle &root_nh, ros::NodeHandle& controller_nh)
 {
 
+    ROS_INFO(" ~~~~~~~~~~~~~~~~~~~ INIT KUKA STATE CONTROLLER ~~~~~~~~~~~~~~~~~~~~");
     std::cout<<"   "<<std::endl;
     ROS_INFO("init KUKAJointStateController");
     std::cout<<"   "<<std::endl;

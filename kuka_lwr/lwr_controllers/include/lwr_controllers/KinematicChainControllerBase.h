@@ -63,6 +63,7 @@ namespace controller_interface
         // get URDF and name of root and tip from the parameter server
         std::string robot_description, root_name, tip_name;
 
+        ROS_INFO(" ~~~~~~~~~~~~~~~~~~~ INIT KiNEMATIC BASE ~~~~~~~~~~~~~~~~~~~~");
         std::string name_space = nh_.getNamespace();
         std::string naemspace_2 = n.getNamespace();
         std::cout<< "--------------------> name_space:  " << name_space << std::endl;

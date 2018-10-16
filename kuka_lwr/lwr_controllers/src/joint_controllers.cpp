@@ -22,6 +22,7 @@ bool JointControllers::init(hardware_interface::KUKAJointInterface *robot, ros::
     KinematicChainControllerBase<hardware_interface::KUKAJointInterface>::init(robot, n);
 
 
+    ROS_INFO(" ~~~~~~~~~~~~~~~~~~~ INIT JOINT CONTROLLER ~~~~~~~~~~~~~~~~~~~~");
     /// Initialise Jacobian and stiffness/damping arrays
 
     K_.resize(kdl_chain_.getNrOfJoints());
