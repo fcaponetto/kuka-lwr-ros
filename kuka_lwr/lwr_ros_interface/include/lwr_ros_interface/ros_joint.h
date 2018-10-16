@@ -23,7 +23,8 @@ public:
 
 public:
 
-   Ros_joint(ros::NodeHandle&   nh, const std::string& controller_name = "joint_controllers");
+//   Ros_joint(ros::NodeHandle&   nh, const std::string& controller_name = "joint_controllers");
+   Ros_joint(ros::NodeHandle&   nh, const std::string& controller_name);
 
    void sendJointPos(const Eigen::VectorXd& joint_position);
 
@@ -55,6 +56,8 @@ protected:
     std_msgs::Float64MultiArray             joint_cmd_msg;
     std_msgs::Float64MultiArray             joint_stiff_msg;
     std_msgs::Float64MultiArray             joint_damp_msg;
+
+    std::string controller_name_;
 
 };
 
