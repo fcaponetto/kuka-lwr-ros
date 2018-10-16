@@ -7,44 +7,36 @@
 
     <!-- The recommended way of specifying the URDF file is to pass it in
          directly. -->
-    <arg name="robot_path" default="$(find lwr_controllers)/robot"/>
+    <arg name="robot_path" default="$(find single_lwr_robot)/robot"/>
     <arg name="robot_urdf_file" default="$(arg robot_path)/$(arg robot_name).urdf.xacro"/>
 
-    <!--<arg name="controllers" default="joint_controllers"/>-->
-    <arg name="controllers" default="position_controller"/>
+    <arg name="controllers" default="joint_controllers"/>
+    <!--<arg name="controllers" default="position_controller"/>-->
     <arg name="t1_limits" default="false"/>
 
-    <!-- load robotHW configurations to rosparam server -->
+    <arg name="rviz_config" default="$(find lwr_launch)/launch/rviz/rviz_config.rviz"/>
+    <arg name="rviz_bringup" default="true"/> <!--If false, do not launch rviz-->
+
     <arg name="hw_interface_file" default="$(find lwr_controllers)/config/hw_interface.yaml"/>
-    <rosparam command="load" file="$(arg hw_interface_file)"/>
-
-    <!-- load all controller configurations to rosparam server -->
     <arg name="controller_config_file" default="$(find lwr_controllers)/config/controllers.yaml"/>
-    <rosparam command="load" file="$(arg controller_config_file)"/>
-
-    <!-- Load updated joint limits (override information from single_lwr_moveit) to respect T1 mode limits -->
+    <arg name="gazebo_world_file" default="$(find lwr_controllers)/worlds/simple_environment.world"/>
     <arg name="t1_limits_file" default="$(find lwr_controllers)/config/t1_joint_limits.yaml"/>
-    <group if="$(arg t1_limits)" ns="robot_description_planning">
-        <rosparam command="load" file="$(arg t1_limits_file)"/>
-    </group>
-
+    <arg name="GAZEBO_GUI" default="false"/>
 
     <!-- choose whether or not to start the full robot simulation -->
     <arg name="use_robot_sim" default="true"/>
 
     <!-- ROBOT -->
+
     <group ns="lwr">
         <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg robot_urdf_file)"/>
         <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
         <!--<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">-->
-            <!--<param name="use_gui" value="true"/>-->
+        <!--<param name="use_gui" value="true"/>-->
         <!--</node>-->
     </group>
 
-
     <!-- LAUNCH GAZEBO with gui=true -->
-    <arg name="gazebo_world_file" default="$(find lwr_controllers)/worlds/simple_environment.world"/>
-    <arg name="GAZEBO_GUI" default="false"/>
     <group if="$(arg use_robot_sim)">
         <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model"
               args="-param /lwr/robot_description -urdf -model $(arg robot_name)" respawn="false" output="screen"/>
@@ -59,7 +51,18 @@
         </include>
     </group>
 
-    <!-- spawn controller nodes -->
+    <!-- Load updated joint limits (override information from single_lwr_moveit) to respect T1 mode limits -->
+    <group if="$(arg t1_limits)" ns="robot_description_planning">
+        <rosparam command="load" file="$(arg t1_limits_file)"/>
+    </group>
+
+    <!-- load robotHW configurations to rosparam server -->
+    <rosparam command="load" file="$(arg hw_interface_file)"/>
+
+    <!-- load all controller configurations to rosparam server -->
+    <rosparam command="load" file="$(arg controller_config_file)"/>
+
+    <!-- real robot and controllers -->
     <group ns="lwr">
         <!-- spawn only desired controllers in current namespace -->
         <node name="controller_spawner_js" pkg="controller_manager" type="spawner" respawn="false" output="screen"
@@ -68,10 +71,8 @@
               args="$(arg controllers)"/>
     </group>
 
-
     <!-- LAUNCH RVIZ -->
-    <arg name="rviz_config" default="$(find lwr_launch)/launch/rviz/rviz_config.rviz"/>
-    <arg name="rviz_bringup" default="true"/> <!--If false, do not launch rviz-->
+
     <node name="lwr_rviz" pkg="rviz" type="rviz" respawn="false" args="-d $(arg rviz_config)"
           output="screen"
           if="$(arg rviz_bringup)"/>
