@@ -10,6 +10,10 @@ PositionController::~PositionController() {}
 
 bool PositionController::init(hardware_interface::KUKAJointInterface *robot, ros::NodeHandle &n)
 {
+    ROS_INFO(" ~~~~~~~~~~~~~~~~~~~ INIT POSITION CONTROLLER ~~~~~~~~~~~~~~~~~~~~");
+
+    KinematicChainControllerBase<hardware_interface::KUKAJointInterface>::init(robot, n);
+
     K_.resize(kdl_chain_.getNrOfJoints());
     D_.resize(kdl_chain_.getNrOfJoints());
 
@@ -21,6 +25,7 @@ bool PositionController::init(hardware_interface::KUKAJointInterface *robot, ros
     pos_cmd_.resize(kdl_chain_.getNrOfJoints());
     tau_cmd_.resize(kdl_chain_.getNrOfJoints());
 
+    joint_vel_msr_.resize(kdl_chain_.getNrOfJoints());
     joint_msr_.resize(kdl_chain_.getNrOfJoints());
 
     J_.resize(kdl_chain_.getNrOfJoints());
