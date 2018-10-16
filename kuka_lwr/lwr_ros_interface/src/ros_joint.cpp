@@ -8,8 +8,12 @@ namespace ros_controller_interface{
 Ros_joint::Ros_joint(ros::NodeHandle &nh, const std::string &controller_name)
 {
 
+    controller_name_ = controller_name;
+
+    ROS_INFO("~~~~~~~~~~~~ %s", nh.getNamespace().c_str());
     joint_sensor_sub     = nh.subscribe("/lwr/joint_states",10,&Ros_joint::jStateCallback,this);
     joint_cmd_pub        = nh.advertise<std_msgs::Float64MultiArray>("/lwr/" + controller_name + "/command_joint_pos",1);
+    ROS_INFO(" ~~~~~ %s", joint_cmd_pub.getTopic().c_str());
     joint_stiff_pub      = nh.advertise<std_msgs::Float64MultiArray>("/lwr/" + controller_name + "/stiffness",1);
     joint_damp_pub       = nh.advertise<std_msgs::Float64MultiArray>("/lwr/" + controller_name + "/damping",1);
 

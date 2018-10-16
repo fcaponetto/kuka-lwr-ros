@@ -18,10 +18,10 @@ switch_controller(nh)
      joint_target_pos.resize(KUKA_NUM_JOINTS);
 }
 
-
 bool Joint_action::update(){
 
-        if(!switch_controller.activate_controller("joint_controllers"))
+//        if(!switch_controller.activate_controller("joint_controllers"))
+        if(!switch_controller.activate_controller(controller_name_))
         {
             ROS_WARN_STREAM("failed to start controller [Joint_action::update()]!");
             return false;
