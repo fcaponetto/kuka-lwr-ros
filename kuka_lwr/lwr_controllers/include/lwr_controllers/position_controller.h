@@ -34,6 +34,9 @@ private:
 
     int thrott_time;
 
+    /* Controll Manager */
+    controllers::Change_ctrl_mode                          ctrl_mode;
+
     boost::scoped_ptr<controllers::Joint_position>         joint_position_controller;
 
     KDL::JntArray       tau_cmd_;

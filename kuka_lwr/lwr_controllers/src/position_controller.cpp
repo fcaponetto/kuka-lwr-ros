@@ -41,7 +41,8 @@ bool PositionController::init(hardware_interface::KUKAJointInterface *robot, ros
     ROS_INFO("JointControllers::init finished initialise [kinematic solvers]!");
 
 
-    joint_position_controller.reset(new controllers::Joint_position(nh_));
+    joint_position_controller.reset(new controllers::Joint_position(nh_, ctrl_mode));
+    ctrl_mode.add(joint_position_controller.get());
     ROS_INFO("JointControllers::init finished initialise [controllers]!");
 
     // get joint positions
