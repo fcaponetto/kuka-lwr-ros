@@ -15,7 +15,8 @@ public:
 
 public:
 
-    Joint_action(ros::NodeHandle&   nh,const std::string& controller_name = "joint_controllers");
+//    Joint_action(ros::NodeHandle&   nh,const std::string& controller_name = "joint_controllers");
+    Joint_action(ros::NodeHandle&   nh,const std::string& controller_name);
 
     virtual bool update();
 
