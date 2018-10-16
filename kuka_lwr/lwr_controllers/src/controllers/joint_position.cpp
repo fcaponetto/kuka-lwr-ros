@@ -3,32 +3,9 @@
 namespace controllers{
 
 Joint_position::Joint_position(ros::NodeHandle& nh, controllers::Change_ctrl_mode &change_ctrl_mode, const std::size_t num_joints):
-//Joint_position::Joint_position(ros::NodeHandle& nh, const std::size_t num_joints):
     Base_controllers(lwr_controllers::CTRL_MODE::JOINT_POSITION),
-//    change_ctrl_mode(change_ctrl_mode),
+    change_ctrl_mode(change_ctrl_mode),
     num_joints(num_joints)
-{
-
-    sub_command_joint_pos_ = nh.subscribe("command_joint_pos",1, &Joint_position::command_joint_pos,    this);
-    ROS_INFO("######################################### %s", sub_command_joint_pos_.getTopic().c_str());
-    q_target_.resize(num_joints);
-
-    /// Filter
-
-    joint_cddynamics.reset(new motion::CDDynamics(7,1e-6,1));
-    motion::Vector velLimits(7);
-    for(std::size_t i = 0; i < 7; i++){
-        velLimits(i)  = 0.25; // x ms^-1
-    }
-    joint_cddynamics->SetVelocityLimits(velLimits);
-    bFirst  = true;
-    bFirst2 = true;
-
-}
-
-Joint_position::Joint_position(ros::NodeHandle& nh, const std::size_t num_joints):
-            Base_controllers(lwr_controllers::CTRL_MODE::JOINT_POSITION),
-            num_joints(num_joints)
 {
 
     sub_command_joint_pos_ = nh.subscribe("command_joint_pos",1, &Joint_position::command_joint_pos,    this);
@@ -86,7 +63,7 @@ void Joint_position::command_joint_pos(const std_msgs::Float64MultiArray::ConstP
         }
         if(bFirst){
 
-//            change_ctrl_mode.switch_mode(ctrl_mode);
+            change_ctrl_mode.switch_mode(ctrl_mode);
             bFirst=false;
             bFirst2=true;
         }

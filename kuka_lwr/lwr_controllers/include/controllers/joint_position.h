@@ -17,7 +17,6 @@ class Joint_position : public Base_controllers {
 public:
 
     Joint_position(ros::NodeHandle& nh,controllers::Change_ctrl_mode& change_ctrl_mode,const std::size_t num_joints=7);
-    Joint_position(ros::NodeHandle& nh,const std::size_t num_joints=7);
 
     void update(KDL::JntArrayAcc& joint_des_, const KDL::JntArrayAcc &joint_msr_, const ros::Duration& period);
 
@@ -29,7 +28,7 @@ private:
 
 private:
 
-//    controllers::Change_ctrl_mode&                      change_ctrl_mode;
+    controllers::Change_ctrl_mode&                      change_ctrl_mode;
     ros::Subscriber                                     sub_command_joint_pos_;
     boost::scoped_ptr<motion::CDDynamics>               joint_cddynamics;
     KDL::JntArray                                       q_target_;
