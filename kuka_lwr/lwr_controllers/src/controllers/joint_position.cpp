@@ -63,7 +63,7 @@ void Joint_position::command_joint_pos(const std_msgs::Float64MultiArray::ConstP
         }
         if(bFirst){
 
-//            change_ctrl_mode.switch_mode(ctrl_mode);
+            change_ctrl_mode.switch_mode(ctrl_mode);
             bFirst=false;
             bFirst2=true;
         }
