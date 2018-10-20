@@ -36,6 +36,8 @@ private:
 
     std::size_t                                         num_joints;
 
+    ros::Subscriber                                     sub_command_joint_pos_;
+
     boost::scoped_ptr<motion::CDDynamics>               joint_cddynamics;
 
     KDL::JntArray       tau_cmd_;
