@@ -1,17 +1,17 @@
-#include "lwr_controllers/position_controller.h"
+#include "lwr_controllers/joint_controller.h"
 #include <pluginlib/class_list_macros.h>
 
 namespace lwr_controllers
 {
 
-PositionController::PositionController() :
+JointController::JointController() :
         thrott_time(1),
         num_joints(7)
 {}
 
-PositionController::~PositionController() {}
+JointController::~JointController() {}
 
-bool PositionController::init(hardware_interface::KUKAJointInterface *robot, ros::NodeHandle &n)
+bool JointController::init(hardware_interface::KUKAJointInterface *robot, ros::NodeHandle &n)
 {
     ROS_INFO(" ~~~~~~~~~~~~~~~~~~~ INIT POSITION CONTROLLER ~~~~~~~~~~~~~~~~~~~~");
 
@@ -51,7 +51,7 @@ bool PositionController::init(hardware_interface::KUKAJointInterface *robot, ros
     ROS_INFO("JointControllers::init finished initialise [kinematic solvers]!");
 
     // subscriber
-    sub_command_joint_pos_ = n.subscribe("command_joint_pos",1, &PositionController::command_joint_pos,    this);
+    sub_command_joint_pos_ = n.subscribe("command_joint_pos",1, &JointController::command_joint_pos,    this);
     ROS_INFO("JointControllers::init finished initialise [controllers]!");
     q_target_.resize(num_joints);
 
@@ -73,7 +73,7 @@ bool PositionController::init(hardware_interface::KUKAJointInterface *robot, ros
 
 }
 
-void PositionController::starting(const ros::Time &time)
+void JointController::starting(const ros::Time &time)
 {
     for(size_t i=0; i<joint_handles_.size(); i++) {
         joint_msr_.q(i)         = joint_handles_[i].getPosition();
@@ -94,7 +94,7 @@ void PositionController::starting(const ros::Time &time)
     ROS_INFO(" JointControllers::starting finished!");
 }
 
-void PositionController::update(const ros::Time &time, const ros::Duration &period)
+void JointController::update(const ros::Time &time, const ros::Duration &period)
 {
     // get measured joint positions and velocity
     for(size_t i=0; i<joint_handles_.size(); i++)
@@ -152,7 +152,7 @@ void PositionController::update(const ros::Time &time, const ros::Duration &peri
     }
 }
 
-void PositionController::command_joint_pos(const std_msgs::Float64MultiArray::ConstPtr &msg){
+void JointController::command_joint_pos(const std_msgs::Float64MultiArray::ConstPtr &msg){
     ROS_INFO("INSIDE POSITION CONTROLLER CALLBACK");
 
 
@@ -174,4 +174,4 @@ void PositionController::command_joint_pos(const std_msgs::Float64MultiArray::Co
 
 }
 }
-PLUGINLIB_EXPORT_CLASS( lwr_controllers::PositionController, controller_interface::ControllerBase)
+PLUGINLIB_EXPORT_CLASS( lwr_controllers::JointController, controller_interface::ControllerBase)

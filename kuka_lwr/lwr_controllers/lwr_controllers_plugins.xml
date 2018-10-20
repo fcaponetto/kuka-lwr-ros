@@ -6,9 +6,9 @@
     </description>
   </class>
 
-  <class name="lwr_controllers/PositionController" type="lwr_controllers::PositionController" base_class_type="controller_interface::ControllerBase">
+  <class name="lwr_controllers/JointController" type="lwr_controllers::JointController" base_class_type="controller_interface::ControllerBase">
     <description>
-      Controller ROS interface for many controllers
+      Controller ROS interface for joint position
     </description>
   </class>
 

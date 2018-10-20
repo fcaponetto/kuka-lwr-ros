@@ -16,13 +16,13 @@
 
 namespace lwr_controllers
 {
-class PositionController : public controller_interface::KinematicChainControllerBase<hardware_interface::KUKAJointInterface>
+class JointController : public controller_interface::KinematicChainControllerBase<hardware_interface::KUKAJointInterface>
 {
 public:
 
-    PositionController();
+    JointController();
 
-    ~PositionController();
+    ~JointController();
 
     bool init(hardware_interface::KUKAJointInterface *robot, ros::NodeHandle &n);
 

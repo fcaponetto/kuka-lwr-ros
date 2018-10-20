@@ -11,7 +11,7 @@
     <arg name="robot_urdf_file" default="$(arg robot_path)/$(arg robot_name).urdf.xacro"/>
 
     <!--<arg name="controllers" default="joint_controllers"/>-->
-    <arg name="controllers" default="position_controller"/>
+    <arg name="controllers" default="joint_controller"/>
     <arg name="t1_limits" default="false"/>
 
     <arg name="rviz_config" default="$(find lwr_launch)/launch/rviz/rviz_config.rviz"/>
@@ -67,7 +67,7 @@
         <!-- spawn only desired controllers in current namespace -->
         <node name="controller_spawner_js" pkg="controller_manager" type="spawner" respawn="false" output="screen"
               args="kuka_joint_state_controller"/>
-        <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"
+        <node name="joint_controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"
               args="$(arg controllers)"/>
     </group>
 

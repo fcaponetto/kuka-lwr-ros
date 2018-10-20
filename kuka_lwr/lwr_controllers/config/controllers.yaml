@@ -15,8 +15,8 @@ lwr:
     max_ee_f : 5
     max_qdot : 3
 
-  position_controller:
-      type: lwr_controllers/PositionController
+  joint_controller:
+      type: lwr_controllers/JointController
       root_name: lwr_base_link
       tip_name: lwr_7_link
       max_ee_dt : 1
