@@ -20,11 +20,9 @@ bool JointController::init(hardware_interface::KUKAJointInterface *robot, ros::N
     K_.resize(kdl_chain_.getNrOfJoints());
     D_.resize(kdl_chain_.getNrOfJoints());
 
-    K_pos_.resize(kdl_chain_.getNrOfJoints());
-    K_vel_.resize(kdl_chain_.getNrOfJoints());
-
     K_cmd.resize(kdl_chain_.getNrOfJoints());
     D_cmd.resize(kdl_chain_.getNrOfJoints());
+    
     pos_cmd_.resize(kdl_chain_.getNrOfJoints());
     tau_cmd_.resize(kdl_chain_.getNrOfJoints());
 

@@ -29,16 +29,17 @@ private:
 
     int thrott_time;
 
-    std::size_t                                         num_joints;
+    std::size_t         num_joints;
 
-    ros::Subscriber                                     sub_command_joint_pos_;
+    ros::Subscriber     sub_command_joint_pos_;
 
-    boost::scoped_ptr<motion::CDDynamics>               joint_cddynamics;
-
-    KDL::JntArray       tau_cmd_;
-    KDL::JntArray       pos_cmd_;
-    KDL::JntArray       K_, D_,K_cmd,D_cmd, K_pos_, K_vel_;
+    KDL::JntArray       tau_cmd_;   // torque
+    KDL::JntArray       pos_cmd_;   // position
+    KDL::JntArray       K_,K_cmd;   // stiffness
+    KDL::JntArray       D_,D_cmd;   // damping
     KDL::JntArray       q_target_;
+
+    boost::scoped_ptr<motion::CDDynamics>   joint_cddynamics;
 
     void command_joint_pos(const std_msgs::Float64MultiArray::ConstPtr &msg);
 
