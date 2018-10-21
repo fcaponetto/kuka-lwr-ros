@@ -5,11 +5,6 @@
 
 #include <ros/ros.h>
 
-#include <kdl/chainfksolverpos_recursive.hpp>
-#include <kdl/chainfksolvervel_recursive.hpp>
-#include <kdl/chainiksolvervel_pinv.hpp>
-#include <kdl/chainiksolverpos_nr_jl.hpp>
-
 #include <boost/scoped_ptr.hpp>
 
 #include "controllers/joint_position.h"
@@ -44,17 +39,6 @@ private:
     KDL::JntArray       pos_cmd_;
     KDL::JntArray       K_, D_,K_cmd,D_cmd, K_pos_, K_vel_;
     KDL::JntArray       q_target_;
-
-//    KDL::Frame          x_msr_;         // measured end-effector position   // cartesian postion
-//    KDL::Jacobian       J_;             // Jacobian                       // cartesian position
-
-    boost::scoped_ptr<KDL::ChainJntToJacSolver>         jnt_to_jac_solver_;
-
-    boost::shared_ptr<KDL::ChainFkSolverPos_recursive>  fk_pos_solver_;
-    boost::shared_ptr<KDL::ChainFkSolverVel_recursive>  fk_vel_solver_;
-    boost::shared_ptr<KDL::ChainIkSolverVel_pinv>       ik_vel_solver_;
-    boost::shared_ptr<KDL::ChainIkSolverPos_NR_JL>      ik_pos_solver_;
-
 
     void command_joint_pos(const std_msgs::Float64MultiArray::ConstPtr &msg);
 

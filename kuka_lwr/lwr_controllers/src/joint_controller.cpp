@@ -13,7 +13,7 @@ JointController::~JointController() {}
 
 bool JointController::init(hardware_interface::KUKAJointInterface *robot, ros::NodeHandle &n)
 {
-    ROS_INFO(" ~~~~~~~~~~~~~~~~~~~ INIT POSITION CONTROLLER ~~~~~~~~~~~~~~~~~~~~");
+    ROS_INFO(" ~~~~~~~~~~~~~~~~~~~ INIT Joint CONTROLLER ~~~~~~~~~~~~~~~~~~~~");
 
     KinematicChainControllerBase<hardware_interface::KUKAJointInterface>::init(robot, n);
 
@@ -37,18 +37,6 @@ bool JointController::init(hardware_interface::KUKAJointInterface *robot, ros::N
         velLimits(i)  = 0.25; // x ms^-1
     }
     joint_cddynamics->SetVelocityLimits(velLimits);
-
-//    J_.resize(kdl_chain_.getNrOfJoints());
-    ROS_INFO("JointControllers::init finished initialise [Jacobian]!");
-
-
-    /// Solvers (Kinematics, etc...)
-    jnt_to_jac_solver_.reset(new KDL::ChainJntToJacSolver(kdl_chain_));
-    fk_pos_solver_.reset(new KDL::ChainFkSolverPos_recursive(kdl_chain_));
-    fk_vel_solver_.reset(       new KDL::ChainFkSolverVel_recursive(kdl_chain_));
-    ik_vel_solver_.reset(new KDL::ChainIkSolverVel_pinv(kdl_chain_));
-    ik_pos_solver_.reset(new KDL::ChainIkSolverPos_NR_JL(kdl_chain_,joint_limits_.min,joint_limits_.max,*fk_pos_solver_,*ik_vel_solver_));
-    ROS_INFO("JointControllers::init finished initialise [kinematic solvers]!");
 
     // subscriber
     sub_command_joint_pos_ = n.subscribe("command_joint_pos",1, &JointController::command_joint_pos,    this);
@@ -104,38 +92,13 @@ void JointController::update(const ros::Time &time, const ros::Duration &period)
         joint_msr_.qdot(i)        = joint_handles_[i].getVelocity();
     }
 
-    // from joint values, create the Jacobian
-//    jnt_to_jac_solver_->JntToJac(joint_msr_.q,J_); //cartesian position
-    // forward kinematic
-//    fk_pos_solver_->JntToCart(joint_msr_.q, x_msr_);  // cartesian position
-    // forward instantaneous kinematic
-//    fk_vel_solver_->JntToCart(joint_vel_msr_,x_dt_msr_);
-
-
     /// compute desired values
     ROS_INFO_STREAM_THROTTLE(thrott_time,"ctrl_mode ===> JOINT_POSITION");
-
-//    if(bFirst2){
-//        joint_cddynamics->SetState(joint_msr_.q.data);
-//        bFirst2=false;
-//    }
 
     joint_cddynamics->SetDt(period.toSec());
     joint_cddynamics->SetTarget(q_target_.data);
     joint_cddynamics->Update();
     joint_cddynamics->GetState(joint_des_.q.data);
-
-
-//    joint_position_controller->update(joint_des_,joint_msr_,period);
-//        robot_ctrl_mode = ROBOT_CTRL_MODE::POSITION_IMP;
-
-//        ROS_INFO_STREAM_THROTTLE(thrott_time,"ctrl_mode ===> NONE");
-//        for(std::size_t i = 0; i < joint_handles_.size();i++){
-//            tau_cmd_(i)         = 0;
-//            joint_des_.q(i)     = joint_msr_.q(i);
-//            joint_des_.qdot(i)  = 0;
-////            robot_ctrl_mode     = ROBOT_CTRL_MODE::TORQUE_IMP;
-//        }
 
     for(size_t i=0; i<joint_handles_.size(); i++) {
         K_cmd(i)         = K_(i);
