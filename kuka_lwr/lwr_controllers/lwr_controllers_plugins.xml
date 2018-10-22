@@ -12,12 +12,17 @@
     </description>
   </class>
 
+  <class name="lwr_controllers/CartesianController" type="lwr_controllers::CartesianController" base_class_type="controller_interface::ControllerBase">
+    <description>
+      Controller ROS interface for cartesian position
+    </description>
+  </class>
+
   <class name="lwr_controllers/KUKAJointStateController" type="lwr_controllers::KUKAJointStateController" base_class_type="controller_interface::ControllerBase">
     <description>
       The KUKAJointStateController is for publishing information such as ee_pos and joint pose on ros topics
     </description>
   </class>
-
 
   <class name="lwr_controllers/JointPositionImpedanceController" type="lwr_controllers::JointPositionImpedanceController" base_class_type="controller_interface::ControllerBase">
     <description>

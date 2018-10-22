@@ -82,7 +82,7 @@ set(INC_FILES
               ${INCLUDE_DIR}/controllers/joint_position.h
 #              ${INCLUDE_DIR}/controllers/cartesian_velocity.h
 #              ${INCLUDE_DIR}/controllers/ff_fb_cartesian.h
-#              ${INCLUDE_DIR}/controllers/cartesian_position.h
+              ${INCLUDE_DIR}/controllers/cartesian_position.h
               ${INCLUDE_DIR}/controllers/change_ctrl_mode.h
 #              ${INCLUDE_DIR}/controllers/passive_ds.h
               )
@@ -90,7 +90,7 @@ set(INC_FILES
 set(SRC_FILES
 #        ${SRC_DIR}/controllers/gravity_compensation.cpp
               ${SRC_DIR}/controllers/joint_position.cpp
-#              ${SRC_DIR}/controllers/cartesian_position.cpp
+              ${SRC_DIR}/controllers/cartesian_position.cpp
 #              ${SRC_DIR}/controllers/cartesian_velocity.cpp
 #              ${SRC_DIR}/controllers/ff_fb_cartesian.cpp
               ${SRC_DIR}/controllers/change_ctrl_mode.cpp
@@ -118,7 +118,8 @@ add_library(${PROJECT_NAME}
   include/lwr_controllers/kuka_joint_state_controller.h
  # include/lwr_controllers/joint_position_impedance_controller.h
   include/lwr_controllers/joint_controllers.h
-        include/lwr_controllers/joint_controller.h
+  include/lwr_controllers/joint_controller.h
+  include/lwr_controllers/cartesian_controller.h
   #include/lwr_controllers/joint_kinematics_imp.h
   include/lwr_controllers/PIDKinematicChainControllerBase.h
   #src/joint_position_impedance_controller.cpp
@@ -126,7 +127,8 @@ add_library(${PROJECT_NAME}
   src/one_task_inverse_kinematics.cpp
   #src/joint_kinematics_imp.cpp
   src/joint_controllers.cpp
-        src/joint_controller.cpp
+  src/joint_controller.cpp
+  src/cartesian_controller.cpp
   ${INC_FILES_UTIL}
   ${SRC_FILES_UTIL}
   ${INC_FILES}

@@ -43,7 +43,8 @@ protected:
 
 public:
 
-    Ros_ee_j(ros::NodeHandle&   nh,const std::string& controller_name = "joint_controllers");
+    Ros_ee_j(ros::NodeHandle&   nh,const std::string& controller_name = "cartesian_controller");
+//    Ros_ee_j(ros::NodeHandle&   nh,const std::string& controller_name = "joint_controllers");
 
     void sendCartPose(const geometry_msgs::Pose & pose_msg);
 

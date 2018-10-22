@@ -81,6 +81,7 @@ public:
 
     ControlStrategy control_strategy;
     bool isTorque = false;
+//    bool isTorque = true;
 
     for (size_t i = 0 ; i < n_joints_ ; i ++ ) { isTorque = isTorque || (joint_effort_command_[i] != 0); }
     if(isTorque) {
@@ -95,7 +96,7 @@ public:
       case JOINT_POSITION:
         for(int j=0; j < n_joints_; j++)
         {
-            ROS_INFO_STREAM_THROTTLE(3.0,"Gazebo JOINT_POSITION");
+//            ROS_INFO_STREAM_THROTTLE(3.0,"Gazebo JOINT_POSITION");
           // according to the gazebo_ros_control plugin, this must *not* be called if SetForce is going to be called
           // but should be called when SetPostion is going to be called
           // so enable this when I find the SetMaxForce reset.

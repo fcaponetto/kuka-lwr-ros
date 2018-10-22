@@ -7,6 +7,7 @@
 
 #include <kdl/kdl.hpp>
 #include <Eigen/Core>
+#include <kdl/frames.hpp>
 
 
 inline void skew_symmetric(KDL::Vector &v_, Eigen::Matrix<double,3,3> &skew_mat_)
