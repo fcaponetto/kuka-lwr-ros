@@ -22,7 +22,7 @@ bool JointController::init(hardware_interface::KUKAJointInterface *robot, ros::N
 
     K_cmd.resize(kdl_chain_.getNrOfJoints());
     D_cmd.resize(kdl_chain_.getNrOfJoints());
-    
+
     pos_cmd_.resize(kdl_chain_.getNrOfJoints());
     tau_cmd_.resize(kdl_chain_.getNrOfJoints());
 
@@ -82,7 +82,7 @@ void JointController::starting(const ros::Time &time)
 
 void JointController::update(const ros::Time &time, const ros::Duration &period)
 {
-    // get measured joint positions and velocity
+    /// get measured joint positions and velocity
     for(size_t i=0; i<joint_handles_.size(); i++)
     {
         // get the joint values
@@ -92,12 +92,12 @@ void JointController::update(const ros::Time &time, const ros::Duration &period)
 
     /// compute desired values
     ROS_INFO_STREAM_THROTTLE(thrott_time,"ctrl_mode ===> JOINT_POSITION");
-
     joint_cddynamics->SetDt(period.toSec());
     joint_cddynamics->SetTarget(q_target_.data);
     joint_cddynamics->Update();
     joint_cddynamics->GetState(joint_des_.q.data);
 
+    /// set desidered position
     for(size_t i=0; i<joint_handles_.size(); i++) {
         K_cmd(i)         = K_(i);
         D_cmd(i)         = D_(i);
@@ -114,7 +114,7 @@ void JointController::update(const ros::Time &time, const ros::Duration &period)
 }
 
 void JointController::command_joint_pos(const std_msgs::Float64MultiArray::ConstPtr &msg){
-    ROS_INFO("INSIDE POSITION CONTROLLER CALLBACK");
+    ROS_INFO("INSIDE JOINT CONTROLLER CALLBACK");
 
 
     if (msg->data.size() == 0) {
