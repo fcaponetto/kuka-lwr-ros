@@ -90,7 +90,7 @@ void CartesianController::starting(const ros::Time &time)
     }
     ROS_INFO(" CartesianController::starting finished!");
 }
-
+static bool cmd_flag_ = false;
 void CartesianController::update(const ros::Time &time, const ros::Duration &period)
 {
     // get measured joint positions and velocity
@@ -101,66 +101,68 @@ void CartesianController::update(const ros::Time &time, const ros::Duration &per
         joint_msr_.qdot(i)        = joint_handles_[i].getVelocity();
     }
 
-    /// from joint values, create the Jacobian
-    jnt_to_jac_solver_->JntToJac(joint_msr_.q,J_);
-    /// forward kinematic x_msr = fkine ( joint_msr)
-    fk_pos_solver_->JntToCart(joint_msr_.q, x_msr_);
 
-    /// compute desired values
+    if(cmd_flag_) {
+        /// forward kinematic x_msr = fkine ( joint_msr)
+        fk_pos_solver_->JntToCart(joint_msr_.q, x_msr_);
+
+        /// getting quaternion from rotation matrix
+        x_msr_.M.GetQuaternion(quat_curr_.v(0), quat_curr_.v(1), quat_curr_.v(2), quat_curr_.a);
+        x_des_.M.GetQuaternion(quat_des_.v(0), quat_des_.v(1), quat_des_.v(2), quat_des_.a);
+
+        /// compute desired values
 //    ROS_INFO_STREAM_THROTTLE(thrott_time,"ctrl_mode ===> CARTESIAN_POSITION");
 
-    /// computing J_pinv_
-    pseudo_inverse(J_.data, J_pinv_);
+        /// from joint values, create the Jacobian
+        jnt_to_jac_solver_->JntToJac(joint_msr_.q, J_);
+        /// computing J_pinv_
+        pseudo_inverse(J_.data, J_pinv_);
 
-    /// getting quaternion from rotation matrix
-    x_msr_.M.GetQuaternion(quat_curr_.v(0),quat_curr_.v(1),quat_curr_.v(2),quat_curr_.a);
-    x_des_.M.GetQuaternion(quat_des_.v(0),quat_des_.v(1),quat_des_.v(2),quat_des_.a);
+        skew_symmetric(quat_des_.v, skew_);
 
-    skew_symmetric(quat_des_.v, skew_);
+        /// [quat_des] * quat_curr
+        for (int i = 0; i < skew_.rows(); i++) {
+            v_temp_(i) = 0.0;
+            for (int k = 0; k < skew_.cols(); k++)
+                v_temp_(i) += skew_(i, k) * (quat_curr_.v(k));
+        }
 
-    for (int i = 0; i < skew_.rows(); i++)
-    {
-        v_temp_(i) = 0.0;
-        for (int k = 0; k < skew_.cols(); k++)
-            v_temp_(i) += skew_(i,k)*(quat_curr_.v(k));
+        // end-effector orientation error
+        x_err_.vel = x_des_.p - x_msr_.p; // TODO check
+        x_err_.rot = quat_curr_.a * quat_des_.v - quat_des_.a * quat_curr_.v - v_temp_;
+
+        // computing q_dot
+        for (int i = 0; i < J_pinv_.rows(); i++) {
+            joint_des_.qdot(i) = 0.0;
+            for (int k = 0; k < J_pinv_.cols(); k++)
+                joint_des_.qdot(i) += J_pinv_(i, k) * x_err_(k); //removed scaling factor of .7
+        }
+
+        // integrating q_dot -> getting q (Euler method)
+        for (std::size_t i = 0; i < static_cast<std::size_t>(joint_des_.q.data.size()); i++) {
+            joint_des_.q(i) += period.toSec() * joint_des_.qdot(i);
+        }
+
+        if (Equal(x_msr_, x_des_, 0.005)) {
+            ROS_INFO("On target");
+            cmd_flag_ = false;
+        }
     }
 
-    // end-effector orientation error
-    x_err_.vel = x_des_.p - x_msr_.p; // TODO check
-    x_err_.rot = quat_curr_.a*quat_des_.v - quat_des_.a*quat_curr_.v - v_temp_;
 
-    // computing q_dot
-    for (int i = 0; i < J_pinv_.rows(); i++)
-    {
-        joint_des_.qdot(i) = 0.0;
-        for (int k = 0; k < J_pinv_.cols(); k++)
-            joint_des_.qdot(i) += J_pinv_(i,k)*x_err_(k); //removed scaling factor of .7
-    }
 
-    // integrating q_dot -> getting q (Euler method)
-    for (std::size_t  i = 0; i < static_cast<std::size_t>(joint_des_.q.data.size()); i++){
-        joint_des_.q(i) += period.toSec()*joint_des_.qdot(i);
-    }
+    ROS_INFO_STREAM_THROTTLE(1,"Joint msr "<< joint_msr_.q.data(0) << " " << joint_msr_.q.data(1) << " " <<
+                                            joint_msr_.q.data(2) << " " << joint_msr_.q.data(3) << " " <<
+                                            joint_msr_.q.data(4) << " " <<joint_msr_.q.data(5) << " " <<
+                                            joint_msr_.q.data(6));
+    ROS_INFO_STREAM_THROTTLE(1,"Joint des "<< joint_des_.q.data(0) << " " << joint_des_.q.data(1) << " " <<
+                                            joint_des_.q.data(2) << " " << joint_des_.q.data(3) << " " <<
+                                            joint_des_.q.data(4) << " " <<joint_des_.q.data(5) << " " <<
+                                            joint_des_.q.data(6) << "\n");
+    ROS_INFO_STREAM_THROTTLE(1,"cart error: " << x_err_.vel(0) << " " << x_err_.vel(1) << " " << x_err_.vel(2)); // TODO check
 
-    ROS_INFO_STREAM_THROTTLE(1,"Joint data \n"<< joint_des_.q.data);
-//    ROS_INFO_STREAM_THROTTLE(1,"cart error: " << x_err_.vel(0) << " " << x_err_.vel(1) << " " << x_err_.vel(2)); // TODO check
+    ROS_INFO_STREAM_THROTTLE(1, "Stiffness " << K_(0) << " " << K_(1) << " " << K_(2) << " " << K_(3) << " " << K_(4) << " " << K_(5) << " " << K_(6));
 
-//    if(bFirst2){
-//        joint_cddynamics->SetState(joint_msr_.q.data);
-//        bFirst2=false;
-//    }
-
-    // x_msr_,J_,joint_des_;
-//    joint_position_controller->update(joint_des_,joint_msr_,period);
-//        robot_ctrl_mode = ROBOT_CTRL_MODE::POSITION_IMP;
-
-//        ROS_INFO_STREAM_THROTTLE(thrott_time,"ctrl_mode ===> NONE");
-//        for(std::size_t i = 0; i < joint_handles_.size();i++){
-//            tau_cmd_(i)         = 0;
-//            joint_des_.q(i)     = joint_msr_.q(i);
-//            joint_des_.qdot(i)  = 0;
-////            robot_ctrl_mode     = ROBOT_CTRL_MODE::TORQUE_IMP;
-//        }
 
     for(size_t i=0; i<joint_handles_.size(); i++) {
         K_cmd(i)         = K_(i);
@@ -186,6 +188,7 @@ void CartesianController::command_cart_pos(const geometry_msgs::PoseConstPtr &ms
             KDL::Vector(msg->position.x,msg->position.y,msg->position.z));
 
     x_des_      = frame_des_;
+    cmd_flag_ = true;
 }
 }
 PLUGINLIB_EXPORT_CLASS( lwr_controllers::CartesianController, controller_interface::ControllerBase)
