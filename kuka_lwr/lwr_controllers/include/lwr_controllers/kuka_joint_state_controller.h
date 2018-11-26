@@ -33,6 +33,9 @@ public:
     virtual void stopping(const ros::Time&);
 
 private:
+
+    int n_joints_ = 3;
+
     std::vector<hardware_interface::JointStateHandle> joint_state_;
 
     // Publishers

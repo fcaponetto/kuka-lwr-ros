@@ -16,10 +16,10 @@ namespace lwr_hw
     joint_names_.push_back( robot_namespace_ + std::string("_0_joint") );
     joint_names_.push_back( robot_namespace_ + std::string("_1_joint") );
     joint_names_.push_back( robot_namespace_ + std::string("_2_joint") );
-    joint_names_.push_back( robot_namespace_ + std::string("_3_joint") );
-    joint_names_.push_back( robot_namespace_ + std::string("_4_joint") );
-    joint_names_.push_back( robot_namespace_ + std::string("_5_joint") );
-    joint_names_.push_back( robot_namespace_ + std::string("_6_joint") );
+//    joint_names_.push_back( robot_namespace_ + std::string("_3_joint") );
+//    joint_names_.push_back( robot_namespace_ + std::string("_4_joint") );
+//    joint_names_.push_back( robot_namespace_ + std::string("_5_joint") );
+//    joint_names_.push_back( robot_namespace_ + std::string("_6_joint") );
 
 
     // VARIABLES

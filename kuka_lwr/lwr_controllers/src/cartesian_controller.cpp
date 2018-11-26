@@ -8,7 +8,7 @@ namespace lwr_controllers
 
 CartesianController::CartesianController():
     thrott_time(1),
-    num_joints(7)
+    num_joints(3)
 {
 
 }
@@ -151,17 +151,17 @@ void CartesianController::update(const ros::Time &time, const ros::Duration &per
 
 
 
-    ROS_INFO_STREAM_THROTTLE(1,"Joint msr "<< joint_msr_.q.data(0) << " " << joint_msr_.q.data(1) << " " <<
-                                            joint_msr_.q.data(2) << " " << joint_msr_.q.data(3) << " " <<
-                                            joint_msr_.q.data(4) << " " <<joint_msr_.q.data(5) << " " <<
-                                            joint_msr_.q.data(6));
-    ROS_INFO_STREAM_THROTTLE(1,"Joint des "<< joint_des_.q.data(0) << " " << joint_des_.q.data(1) << " " <<
-                                            joint_des_.q.data(2) << " " << joint_des_.q.data(3) << " " <<
-                                            joint_des_.q.data(4) << " " <<joint_des_.q.data(5) << " " <<
-                                            joint_des_.q.data(6) << "\n");
-    ROS_INFO_STREAM_THROTTLE(1,"cart error: " << x_err_.vel(0) << " " << x_err_.vel(1) << " " << x_err_.vel(2)); // TODO check
-
-    ROS_INFO_STREAM_THROTTLE(1, "Stiffness " << K_(0) << " " << K_(1) << " " << K_(2) << " " << K_(3) << " " << K_(4) << " " << K_(5) << " " << K_(6));
+//    ROS_INFO_STREAM_THROTTLE(1,"Joint msr "<< joint_msr_.q.data(0) << " " << joint_msr_.q.data(1) << " " <<
+//                                            joint_msr_.q.data(2) << " " << joint_msr_.q.data(3) << " " <<
+//                                            joint_msr_.q.data(4) << " " <<joint_msr_.q.data(5) << " " <<
+//                                            joint_msr_.q.data(6));
+//    ROS_INFO_STREAM_THROTTLE(1,"Joint des "<< joint_des_.q.data(0) << " " << joint_des_.q.data(1) << " " <<
+//                                            joint_des_.q.data(2) << " " << joint_des_.q.data(3) << " " <<
+//                                            joint_des_.q.data(4) << " " <<joint_des_.q.data(5) << " " <<
+//                                            joint_des_.q.data(6) << "\n");
+//    ROS_INFO_STREAM_THROTTLE(1,"cart error: " << x_err_.vel(0) << " " << x_err_.vel(1) << " " << x_err_.vel(2)); // TODO check
+//
+//    ROS_INFO_STREAM_THROTTLE(1, "Stiffness " << K_(0) << " " << K_(1) << " " << K_(2) << " " << K_(3) << " " << K_(4) << " " << K_(5) << " " << K_(6));
 
 
     for(size_t i=0; i<joint_handles_.size(); i++) {

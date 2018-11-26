@@ -20,8 +20,8 @@ bool KUKAJointStateController::init(hardware_interface::JointStateInterface* rob
 
     fk_pos_solver_.reset(new KDL::ChainFkSolverPos_recursive(kdl_chain_));
     fk_vel_solver_.reset(new KDL::ChainFkSolverVel_recursive(kdl_chain_));
-    K_.resize(7);
-    D_.resize(7);
+    K_.resize(n_joints_);
+    D_.resize(n_joints_);
 
     // std::cout<< "#1" << std::endl;
 
@@ -52,21 +52,21 @@ bool KUKAJointStateController::init(hardware_interface::JointStateInterface* rob
         realtime_pub_->msg_.effort.push_back(0.0);
     }
 
-    for (unsigned i=0; i<=7; i++){
+    for (unsigned i=0; i<=n_joints_; i++){
           realtime_pub_->msg_.name.push_back("lwr_" + boost::lexical_cast<std::string>(i) + "_joint_stiffness");
           realtime_pub_->msg_.position.push_back(0.0);
           realtime_pub_->msg_.velocity.push_back(0.0);
           realtime_pub_->msg_.effort.push_back(0.0);
       }
 
-    for (unsigned i=0; i<=7; i++){
+    for (unsigned i=0; i<=n_joints_; i++){
           realtime_pub_->msg_.name.push_back("lwr_" + boost::lexical_cast<std::string>(i) + "_joint_damping");
           realtime_pub_->msg_.position.push_back(0.0);
           realtime_pub_->msg_.velocity.push_back(0.0);
           realtime_pub_->msg_.effort.push_back(0.0);
       }
 
-    for (unsigned i=0; i<=7; i++){
+    for (unsigned i=0; i<=n_joints_; i++){
           realtime_pub_->msg_.name.push_back("lwr_" + boost::lexical_cast<std::string>(i) + "_joint_torque");
           realtime_pub_->msg_.position.push_back(0.0);
           realtime_pub_->msg_.velocity.push_back(0.0);
@@ -95,8 +95,8 @@ bool KUKAJointStateController::init(hardware_interface::JointStateInterface* rob
 
     ROS_INFO_STREAM("joint_handles_.size(): " << joint_handles_.size());
 
-    joint_msr_states_.q.resize(7);
-    joint_msr_states_.qdot.resize(7);
+    joint_msr_states_.q.resize(n_joints_);
+    joint_msr_states_.qdot.resize(n_joints_);
 
     realtime_pose_pub_->msg_.position.x = x_.p.x();
     realtime_pose_pub_->msg_.position.y = x_.p.y();
@@ -157,7 +157,7 @@ void KUKAJointStateController::update(const ros::Time& time, const ros::Duration
 
         /** CARTESIAN pos/vel/accel computation **/
 
-        for(size_t i=0; i<7; i++) {
+        for(size_t i=0; i<n_joints_; i++) {
             joint_msr_states_.q(i)           = joint_handles_[i].getPosition();
             joint_msr_states_.qdot(i)        = joint_handles_[i].getVelocity();
            // qdot_msg.data[i]          = joint_msr_.qdot(i);

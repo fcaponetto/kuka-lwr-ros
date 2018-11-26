@@ -14,7 +14,7 @@
     <arg name="controller_config_file" default="$(find lwr_controllers)/config/controllers.yaml"/>
     <arg name="gazebo_world_file" default="$(find lwr_controllers)/worlds/simple_environment.world"/>
     <arg name="t1_limits_file" default="$(find lwr_controllers)/config/t1_joint_limits.yaml"/>
-    <arg name="GAZEBO_GUI" default="false"/>
+    <arg name="GAZEBO_GUI" default="true"/>
 
     <!-- choose whether or not to start the full robot simulation -->
     <arg name="use_robot_sim" default="true"/>
