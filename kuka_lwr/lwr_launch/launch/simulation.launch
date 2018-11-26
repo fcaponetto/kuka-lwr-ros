@@ -2,14 +2,6 @@
 <launch>
     <!-- LAUNCH INTERFACE -->
 
-    <!-- The robot name is required for gazebo to spawn a model. -->
-    <arg name="robot_name" default="single_lwr_robot"/>
-
-    <!-- The recommended way of specifying the URDF file is to pass it in
-         directly. -->
-    <arg name="robot_path" default="$(find single_lwr_robot)/robot"/>
-    <arg name="robot_urdf_file" default="$(arg robot_path)/$(arg robot_name).urdf.xacro"/>
-
     <!--<arg name="controllers" default="joint_controllers"/>-->
     <!--<arg name="controllers" default="joint_controller"/>-->
     <arg name="controllers" default="cartesian_controller"/>
@@ -30,7 +22,8 @@
     <!-- ROBOT -->
 
     <group ns="lwr">
-        <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg robot_urdf_file)"/>
+        <!--<param name="robot_description" command="$(find xacro)/xacro &#45;&#45;inorder $(arg robot_urdf_file)"/>-->
+        <param name="robot_description" command="$(find xacro)/xacro --inorder $(find lwr_description)/model/kuka_lwr.urdf.xacro"/>
         <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
         <!--<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">-->
         <!--<param name="use_gui" value="true"/>-->
@@ -40,7 +33,7 @@
     <!-- LAUNCH GAZEBO with gui=true -->
     <group if="$(arg use_robot_sim)">
         <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model"
-              args="-param /lwr/robot_description -urdf -model $(arg robot_name)" respawn="false" output="screen"/>
+              args="-param /lwr/robot_description -urdf -model kuka_lwr" respawn="false" output="screen"/>
         <!-- enable/disable gui at will, the rviz listens to the simulation -->
         <include file="$(find gazebo_ros)/launch/empty_world.launch">
             <arg name="world_name" value="$(arg gazebo_world_file)"/>
