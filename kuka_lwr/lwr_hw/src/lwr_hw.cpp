@@ -13,9 +13,13 @@ namespace lwr_hw
     // ALLOCATE MEMORY
 
     // JOINT NAMES ARE TAKEN FROM URDF NAME CONVENTION
-    joint_names_.push_back( robot_namespace_ + std::string("_0_joint") );
-    joint_names_.push_back( robot_namespace_ + std::string("_1_joint") );
-    joint_names_.push_back( robot_namespace_ + std::string("_2_joint") );
+    for(int i = 0; i < n_joints_; i++)
+    {
+        joint_names_.push_back( robot_namespace_ + "_" + std::to_string(i) + std::string("_joint") );
+    }
+//    joint_names_.push_back( robot_namespace_ + std::string("_0_joint") );
+//    joint_names_.push_back( robot_namespace_ + std::string("_1_joint") );
+//    joint_names_.push_back( robot_namespace_ + std::string("_2_joint") );
 //    joint_names_.push_back( robot_namespace_ + std::string("_3_joint") );
 //    joint_names_.push_back( robot_namespace_ + std::string("_4_joint") );
 //    joint_names_.push_back( robot_namespace_ + std::string("_5_joint") );

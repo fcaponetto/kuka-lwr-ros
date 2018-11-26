@@ -133,7 +133,7 @@ public:
 
   // configuration
 //  int n_joints_ = 7; // safe magic number, the kuka lwr 4+ has 7 joints
-  int n_joints_ = 3; // safe magic number, the kuka lwr 4+ has 7 joints
+  int n_joints_ = 6; // safe magic number, the kuka lwr 4+ has 7 joints
   std::vector<std::string> joint_names_;
 
   // limits
