@@ -396,4 +396,9 @@
 
   </xacro:macro>
 
+    <!-- using the models -->
+    <xacro:kuka_lwr name="lwr">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </xacro:kuka_lwr>
+
 </robot>
