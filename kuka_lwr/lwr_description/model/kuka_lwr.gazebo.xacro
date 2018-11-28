@@ -27,21 +27,21 @@
       <gravity>true</gravity>
     </gazebo>
 
-    <gazebo reference="${name}_3_link">
-      <gravity>true</gravity>
-    </gazebo>
+    <!--<gazebo reference="${name}_3_link">-->
+      <!--<gravity>true</gravity>-->
+    <!--</gazebo>-->
 
-    <gazebo reference="${name}_4_link">
-      <gravity>true</gravity>
-    </gazebo>
+    <!--<gazebo reference="${name}_4_link">-->
+      <!--<gravity>true</gravity>-->
+    <!--</gazebo>-->
 
-    <gazebo reference="${name}_5_link">
-      <gravity>true</gravity>
-    </gazebo>
+    <!--<gazebo reference="${name}_5_link">-->
+      <!--<gravity>true</gravity>-->
+    <!--</gazebo>-->
 
-    <gazebo reference="${name}_6_link">
-      <gravity>true</gravity>
-    </gazebo>
+    <!--<gazebo reference="${name}_6_link">-->
+      <!--<gravity>true</gravity>-->
+    <!--</gazebo>-->
 
     <!--<gazebo reference="${name}_7_link">-->
       <!--<gravity>true</gravity>-->

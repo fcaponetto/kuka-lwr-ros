@@ -164,192 +164,192 @@
       </collision>
     </link>
 
-    <!-- Fourth element of the arm. z-axis -->
-    <joint name="${name}_2_joint" type="revolute">
-      <origin xyz="0 0 0.20" rpy="0 0 0"/>
-      <axis xyz="0 0 1"/>
-      <limit lower="${-170 * M_PI / 180}" upper="${170 * M_PI / 180}" effort="100" velocity="${velocity_scale * 128 * M_PI / 180}" />
-      <dynamics friction="10.0" damping="1.0"/>
-      <parent link="${name}_2_link"/>
-      <child link="${name}_3_link"/>
-    </joint>
+    <!--&lt;!&ndash; Fourth element of the arm. z-axis &ndash;&gt;-->
+    <!--<joint name="${name}_2_joint" type="revolute">-->
+      <!--<origin xyz="0 0 0.20" rpy="0 0 0"/>-->
+      <!--<axis xyz="0 0 1"/>-->
+      <!--<limit lower="${-170 * M_PI / 180}" upper="${170 * M_PI / 180}" effort="100" velocity="${velocity_scale * 128 * M_PI / 180}" />-->
+      <!--<dynamics friction="10.0" damping="1.0"/>-->
+      <!--<parent link="${name}_2_link"/>-->
+      <!--<child link="${name}_3_link"/>-->
+    <!--</joint>-->
 
 
-<!-- 			LINK 3 			-->
-
-
-
-    <link name="${name}_3_link">
-      <inertial>
-	<mass value="${link_mass}"/>
-	<origin rpy="0 0 0" xyz="0 0.06 0.130"/>
-	<cuboid_inertia_def length="0.12" width="0.06" height="0.260" mass="${link_mass}"/>
-      </inertial>
-
-      <visual>
-       <origin xyz="0 0 0" rpy="0 0 0"/>
-       <geometry>
-       	 <mesh filename="package://lwr_description/meshes_arm/arm_segment_a.dae"/>
-        </geometry>
-        <material name="Orange"/>
-      </visual>
-
-      <collision>
-	<origin xyz="0 0 0.0" rpy="0 0 0"/>
-	<geometry>
-	  <!--mesh filename="package://lwr_description/meshes/convex/arm_segment_a_convex.stl"/-->
-	  <sphere radius="0.07"/>
-	</geometry>
-      </collision>
-      <collision>
-	<origin xyz="0 -0.06 0.2" rpy="0 0 0"/>
-	<geometry>
-	  <sphere radius="0.07"/>
-	</geometry>
-      </collision>
-      <collision>
-	<origin xyz="0 -0.03 0.1" rpy="0.291 0 0"/>
-	<geometry>
-	  <cylinder radius="0.07" length="0.208"/>
-	</geometry>
-      </collision>
-    </link>
-
-    <!-- fifth element of the arm. x-axis -->
-    <joint name="${name}_3_joint" type="revolute">
-      <origin xyz="0 0 0.20" rpy="0 0 0"/>
-      <axis xyz="0 1 0"/>
-      <limit lower="${-120 * M_PI / 180}" upper="${120 * M_PI / 180}" effort="100" velocity="${velocity_scale * 128 * M_PI / 180}" />
-      <dynamics friction="10.0" damping="1.0"/>
-      <parent link="${name}_3_link"/>
-      <child link="${name}_4_link"/>
-    </joint>
-
-<!-- 			LINK 4 			-->
-
-
-    <link name="${name}_4_link">
-      <inertial>
-	<mass value="${link_mass}"/>
-	<origin rpy="0 0 0" xyz="0 -0.06 ${0.130 - 0.06}"/>
-	<cuboid_inertia_def length="0.12" width="0.06" height="0.2600" mass="${link_mass}"/>
-      </inertial>
-
-      <visual>
-        <origin xyz="0 0 0.2" rpy="0 ${M_PI} ${M_PI}"/>
-         <geometry>
-            <mesh filename="package://lwr_description/meshes_arm/arm_segment_b.dae"/>
-      	 </geometry>
-      	<material name="Orange"/>
-      </visual>
-
-      <collision>
-	<origin xyz="0 0 0.2" rpy="0 0 0"/>
-	<geometry>
-	  <!--mesh filename="package://lwr_description/meshes/convex/arm_segment_b_convex.stl"/-->
-	  <sphere radius="0.07"/>
-	</geometry>
-      </collision>
-      <collision>
-	<origin xyz="0 0.06 0.0" rpy="0 0 0"/>
-	<geometry>
-	  <sphere radius="0.07"/>
-	</geometry>
-      </collision>
-      <collision>
-	<origin xyz="0 0.03 0.1" rpy="0.291 0 0"/>
-	<geometry>
-	  <cylinder radius="0.07" length="0.208"/>
-	</geometry>
-      </collision>
-    </link>
-
-    <!-- Sixth element of the arm. z-axis -->
-    <joint name="${name}_4_joint" type="revolute">
-      <origin xyz="0 0 0.20" rpy="0 0 0"/>
-      <axis xyz="0 0 1"/>
-      <limit lower="${-170 * M_PI / 180}" upper="${170 * M_PI / 180}" effort="100" velocity="${velocity_scale * 204 * M_PI / 180}" />
-      <dynamics friction="10.0" damping="1.0"/>
-      <parent link="${name}_4_link"/>
-      <child link="${name}_5_link"/>
-    </joint>
-
-<!-- 			LINK 5 			-->
-
-    <link name="${name}_5_link">
-      <inertial>
-	<mass value="${link_mass}"/>
-	<origin rpy="0 0 0" xyz="0 0 0.124"/>
-	<cuboid_inertia_def length="0.12" width="0.06" height="0.248" mass="${link_mass}"/>
-      </inertial>
-
-      <visual>
-      	<origin xyz="0 0 0" rpy="0 0 ${M_PI}"/>
-      	  <geometry name="${name}_arm_5_geom">
-             <mesh filename="package://lwr_description/meshes_arm/arm_segment_last.dae"/>
-           </geometry>
-         <material name="Orange"/>
-      </visual>
-
-      <collision>
-	<origin xyz="0 0 0.0" rpy="0 0 0"/>
-	<geometry>
-	  <!--mesh filename="package://lwr_description/meshes/convex/arm_segment_last_convex.stl"/-->
-	  <sphere radius="0.07"/>
-	</geometry>
-      </collision>
-      <collision>
-	<origin xyz="0 0.04 0.19" rpy="0 0 0"/>
-	<geometry>
-	  <sphere radius="0.07"/>
-	</geometry>
-      </collision>
-      <collision>
-	<origin xyz="0 0.02 0.095" rpy="-0.207 0 0"/>
-	<geometry>
-	  <cylinder radius="0.07" length="0.198"/>
-	</geometry>
-      </collision>
-    </link>
-
-    <!-- Seventh element of the arm. z-axis -->
-    <joint name="${name}_5_joint" type="revolute">
-      <origin xyz="0 0 0.19" rpy="0 0 0"/>
-      <axis xyz="0 -1 0"/>
-      <limit lower="${-120 * M_PI / 180}" upper="${120 * M_PI / 180}" effort="38" velocity="${velocity_scale * 184 * M_PI / 180}" />
-      <dynamics friction="10.0" damping="1.0"/>
-      <parent link="${name}_5_link"/>
-      <child link="${name}_6_link"/>
-    </joint>
+<!--&lt;!&ndash; 			LINK 3 			&ndash;&gt;-->
 
 
 
-<!-- 			LINK 6 			-->
+    <!--<link name="${name}_3_link">-->
+      <!--<inertial>-->
+	<!--<mass value="${link_mass}"/>-->
+	<!--<origin rpy="0 0 0" xyz="0 0.06 0.130"/>-->
+	<!--<cuboid_inertia_def length="0.12" width="0.06" height="0.260" mass="${link_mass}"/>-->
+      <!--</inertial>-->
+
+      <!--<visual>-->
+       <!--<origin xyz="0 0 0" rpy="0 0 0"/>-->
+       <!--<geometry>-->
+       	 <!--<mesh filename="package://lwr_description/meshes_arm/arm_segment_a.dae"/>-->
+        <!--</geometry>-->
+        <!--<material name="Orange"/>-->
+      <!--</visual>-->
+
+      <!--<collision>-->
+	<!--<origin xyz="0 0 0.0" rpy="0 0 0"/>-->
+	<!--<geometry>-->
+	  <!--&lt;!&ndash;mesh filename="package://lwr_description/meshes/convex/arm_segment_a_convex.stl"/&ndash;&gt;-->
+	  <!--<sphere radius="0.07"/>-->
+	<!--</geometry>-->
+      <!--</collision>-->
+      <!--<collision>-->
+	<!--<origin xyz="0 -0.06 0.2" rpy="0 0 0"/>-->
+	<!--<geometry>-->
+	  <!--<sphere radius="0.07"/>-->
+	<!--</geometry>-->
+      <!--</collision>-->
+      <!--<collision>-->
+	<!--<origin xyz="0 -0.03 0.1" rpy="0.291 0 0"/>-->
+	<!--<geometry>-->
+	  <!--<cylinder radius="0.07" length="0.208"/>-->
+	<!--</geometry>-->
+      <!--</collision>-->
+    <!--</link>-->
+
+    <!--&lt;!&ndash; fifth element of the arm. x-axis &ndash;&gt;-->
+    <!--<joint name="${name}_3_joint" type="revolute">-->
+      <!--<origin xyz="0 0 0.20" rpy="0 0 0"/>-->
+      <!--<axis xyz="0 1 0"/>-->
+      <!--<limit lower="${-120 * M_PI / 180}" upper="${120 * M_PI / 180}" effort="100" velocity="${velocity_scale * 128 * M_PI / 180}" />-->
+      <!--<dynamics friction="10.0" damping="1.0"/>-->
+      <!--<parent link="${name}_3_link"/>-->
+      <!--<child link="${name}_4_link"/>-->
+    <!--</joint>-->
+
+<!--&lt;!&ndash; 			LINK 4 			&ndash;&gt;-->
+
+
+    <!--<link name="${name}_4_link">-->
+      <!--<inertial>-->
+	<!--<mass value="${link_mass}"/>-->
+	<!--<origin rpy="0 0 0" xyz="0 -0.06 ${0.130 - 0.06}"/>-->
+	<!--<cuboid_inertia_def length="0.12" width="0.06" height="0.2600" mass="${link_mass}"/>-->
+      <!--</inertial>-->
+
+      <!--<visual>-->
+        <!--<origin xyz="0 0 0.2" rpy="0 ${M_PI} ${M_PI}"/>-->
+         <!--<geometry>-->
+            <!--<mesh filename="package://lwr_description/meshes_arm/arm_segment_b.dae"/>-->
+      	 <!--</geometry>-->
+      	<!--<material name="Orange"/>-->
+      <!--</visual>-->
+
+      <!--<collision>-->
+	<!--<origin xyz="0 0 0.2" rpy="0 0 0"/>-->
+	<!--<geometry>-->
+	  <!--&lt;!&ndash;mesh filename="package://lwr_description/meshes/convex/arm_segment_b_convex.stl"/&ndash;&gt;-->
+	  <!--<sphere radius="0.07"/>-->
+	<!--</geometry>-->
+      <!--</collision>-->
+      <!--<collision>-->
+	<!--<origin xyz="0 0.06 0.0" rpy="0 0 0"/>-->
+	<!--<geometry>-->
+	  <!--<sphere radius="0.07"/>-->
+	<!--</geometry>-->
+      <!--</collision>-->
+      <!--<collision>-->
+	<!--<origin xyz="0 0.03 0.1" rpy="0.291 0 0"/>-->
+	<!--<geometry>-->
+	  <!--<cylinder radius="0.07" length="0.208"/>-->
+	<!--</geometry>-->
+      <!--</collision>-->
+    <!--</link>-->
+
+    <!--&lt;!&ndash; Sixth element of the arm. z-axis &ndash;&gt;-->
+    <!--<joint name="${name}_4_joint" type="revolute">-->
+      <!--<origin xyz="0 0 0.20" rpy="0 0 0"/>-->
+      <!--<axis xyz="0 0 1"/>-->
+      <!--<limit lower="${-170 * M_PI / 180}" upper="${170 * M_PI / 180}" effort="100" velocity="${velocity_scale * 204 * M_PI / 180}" />-->
+      <!--<dynamics friction="10.0" damping="1.0"/>-->
+      <!--<parent link="${name}_4_link"/>-->
+      <!--<child link="${name}_5_link"/>-->
+    <!--</joint>-->
+
+<!--&lt;!&ndash; 			LINK 5 			&ndash;&gt;-->
+
+    <!--<link name="${name}_5_link">-->
+      <!--<inertial>-->
+	<!--<mass value="${link_mass}"/>-->
+	<!--<origin rpy="0 0 0" xyz="0 0 0.124"/>-->
+	<!--<cuboid_inertia_def length="0.12" width="0.06" height="0.248" mass="${link_mass}"/>-->
+      <!--</inertial>-->
+
+      <!--<visual>-->
+      	<!--<origin xyz="0 0 0" rpy="0 0 ${M_PI}"/>-->
+      	  <!--<geometry name="${name}_arm_5_geom">-->
+             <!--<mesh filename="package://lwr_description/meshes_arm/arm_segment_last.dae"/>-->
+           <!--</geometry>-->
+         <!--<material name="Orange"/>-->
+      <!--</visual>-->
+
+      <!--<collision>-->
+	<!--<origin xyz="0 0 0.0" rpy="0 0 0"/>-->
+	<!--<geometry>-->
+	  <!--&lt;!&ndash;mesh filename="package://lwr_description/meshes/convex/arm_segment_last_convex.stl"/&ndash;&gt;-->
+	  <!--<sphere radius="0.07"/>-->
+	<!--</geometry>-->
+      <!--</collision>-->
+      <!--<collision>-->
+	<!--<origin xyz="0 0.04 0.19" rpy="0 0 0"/>-->
+	<!--<geometry>-->
+	  <!--<sphere radius="0.07"/>-->
+	<!--</geometry>-->
+      <!--</collision>-->
+      <!--<collision>-->
+	<!--<origin xyz="0 0.02 0.095" rpy="-0.207 0 0"/>-->
+	<!--<geometry>-->
+	  <!--<cylinder radius="0.07" length="0.198"/>-->
+	<!--</geometry>-->
+      <!--</collision>-->
+    <!--</link>-->
+
+    <!--&lt;!&ndash; Seventh element of the arm. z-axis &ndash;&gt;-->
+    <!--<joint name="${name}_5_joint" type="revolute">-->
+      <!--<origin xyz="0 0 0.19" rpy="0 0 0"/>-->
+      <!--<axis xyz="0 -1 0"/>-->
+      <!--<limit lower="${-120 * M_PI / 180}" upper="${120 * M_PI / 180}" effort="38" velocity="${velocity_scale * 184 * M_PI / 180}" />-->
+      <!--<dynamics friction="10.0" damping="1.0"/>-->
+      <!--<parent link="${name}_5_link"/>-->
+      <!--<child link="${name}_6_link"/>-->
+    <!--</joint>-->
 
 
 
-    <link name="${name}_6_link">
-      <inertial>
-	<mass value="0.2"/>
-	<origin rpy="0 0 0" xyz="0 0 0.0625"/>
-	<cuboid_inertia_def length="0.125" width="0.125" height="0.125" mass="0.2"/>
-      </inertial>
+<!--&lt;!&ndash; 			LINK 6 			&ndash;&gt;-->
 
-      <visual>
-      	<origin xyz="0 0 0" rpy="0 0 ${M_PI}"/>
-        <geometry>
-      	  <mesh filename="package://lwr_description/meshes_arm/arm_wrist.dae"/>
-         </geometry>
-         <material name="Grey"/>
-      </visual>
 
-      <collision>
-	<origin xyz="0 0 0" rpy="0 0 ${M_PI}"/>
-	<geometry>
-	  <mesh filename="package://lwr_description/meshes/convex/arm_wrist_convex.stl"/>
-	</geometry>
-      </collision>
-    </link>
+
+    <!--<link name="${name}_6_link">-->
+      <!--<inertial>-->
+	<!--<mass value="0.2"/>-->
+	<!--<origin rpy="0 0 0" xyz="0 0 0.0625"/>-->
+	<!--<cuboid_inertia_def length="0.125" width="0.125" height="0.125" mass="0.2"/>-->
+      <!--</inertial>-->
+
+      <!--<visual>-->
+      	<!--<origin xyz="0 0 0" rpy="0 0 ${M_PI}"/>-->
+        <!--<geometry>-->
+      	  <!--<mesh filename="package://lwr_description/meshes_arm/arm_wrist.dae"/>-->
+         <!--</geometry>-->
+         <!--<material name="Grey"/>-->
+      <!--</visual>-->
+
+      <!--<collision>-->
+	<!--<origin xyz="0 0 0" rpy="0 0 ${M_PI}"/>-->
+	<!--<geometry>-->
+	  <!--<mesh filename="package://lwr_description/meshes/convex/arm_wrist_convex.stl"/>-->
+	<!--</geometry>-->
+      <!--</collision>-->
+    <!--</link>-->
 
     <!--&lt;!&ndash; Eighth element of the arm. z-axis &ndash;&gt;-->
     <!--<joint name="${name}_6_joint" type="revolute">-->

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package>
+  <name>arm_description</name>
+  <version>0.1.0</version>
+  <description>The telep_description package contains the model of a ROBOT arm.</description>
+
+  <maintainer email="cjrosale@gmail.com">Carlos J. Rosales</maintainer>
+
+  <license>GPLv2</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <export>
+  </export>
+</package>

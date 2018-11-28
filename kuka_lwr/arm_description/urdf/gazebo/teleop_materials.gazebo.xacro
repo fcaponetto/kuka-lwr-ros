@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+
+<!--<gazebo reference="_teleop_link0">-->
+  <!--<material>Gazebo/Green</material>-->
+<!--</gazebo>-->
+<!--<gazebo reference="_teleop_link1">-->
+  <!--<material>Gazebo/DarkGrey</material>-->
+<!--</gazebo>-->
+<!--<gazebo reference="_teleop_link2">-->
+  <!--<material>Gazebo/Green</material>-->
+<!--</gazebo>-->
+<!--<gazebo reference="_teleop_link3">-->
+  <!--<material>Gazebo/DarkGrey</material>-->
+<!--</gazebo>-->
+<!--<gazebo reference="_teleop_link4">-->
+  <!--<material>Gazebo/DarkGrey</material>-->
+<!--</gazebo>-->
+<!--<gazebo reference="_teleop_link5">-->
+  <!--<material>Gazebo/DarkGrey</material>-->
+<!--</gazebo>-->
+
+
+  <material name="LightGrey">
+    <color rgba="0.8 0.8 0.8 1.0"/>
+  </material>
+
+  <material name="Red">
+    <color rgba="0.3 0.3 0.3 1.0"/>
+  </material>
+
+  <material name="Black">
+    <color rgba="0 0 0 1.0"/>
+  </material>
+
+  <material name="Orange">
+    <color rgba="1.0 0.487 0 1.0"/>
+  </material>
+
+  <material name="Silver">
+    <color rgba="1.0 1.0 1.0 1.0"/>
+  </material>
+
+  <material name="Grey">
+    <color rgba="0.7 0.7 0.7 1.0"/>
+  </material>
+
+  <material name="Blue">
+    <color rgba="0.0 0.0 0.8 1.0"/>
+  </material>
+
+  <material name="Purple">
+    <color rgba="0.34 0.139 0.34 1.0"/>
+  </material>
+
+</robot>

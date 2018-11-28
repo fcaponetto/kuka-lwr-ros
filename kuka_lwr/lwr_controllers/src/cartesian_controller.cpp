@@ -8,7 +8,7 @@ namespace lwr_controllers
 
 CartesianController::CartesianController():
     thrott_time(1),
-    num_joints(6)
+    num_joints(5)
 {
 
 }

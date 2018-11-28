@@ -1,0 +1,256 @@
+<?xml version="1.0"?>
+<robot name="teleop_arm" xmlns:xacro="http://ros.org/wiki/xacro" >
+  <!--
+  ROS urdf definition of the TELEOP robot by Istituto Italiano di Tecnologia
+  
+  Author: Enrico Mingo
+  
+  This file groups files to use COGIMON in GAZEBO
+  
+  -->
+  <!--<xacro:include filename="$(find arm_description)/urdf/teleop.urdf.xacro" />-->
+ 
+  <xacro:include filename="$(find arm_description)/urdf/gazebo/teleop_materials.gazebo.xacro" />
+
+  <xacro:include filename="$(find arm_description)/urdf/gazebo/teleop.gazebo.xacro" />
+  <xacro:include filename="$(find arm_description)/urdf/teleop.transmission.xacro"/>
+  
+  <!--xacro:include filename="$(find cogimon_urdf)/urdf/gazebo/force_torque.gazebo.xacro" /-->
+
+  <!--<xacro:include filename="$(find arm_description)/urdf/gazebo/xbot_control.gazebo.xacro" />-->
+
+  <xacro:property name="mmTom" value="0.001" />
+  <xacro:property name="mm2Tom2" value="${0.001*0.001}" />
+  <xacro:property name="tonsToKg" value="1000.0" />
+
+  <xacro:property name="PI" value="3.14159265359" />
+  <xacro:property name="PI_2" value="1.57079632679" />
+
+  <xacro:property name="toRad" value="${PI/180.0}" />
+  <xacro:property name="toDeg" value="${180.0/PI}" />
+
+
+  <xacro:macro name="teleop_arm" params="name base_link:=world *origin">
+  <!--<robot name="teleop">-->
+
+    <link name="${base_link}"/>
+
+    <gazebo reference="${base_link}">
+      <static>true</static>
+      <turnGravityOff>true</turnGravityOff>
+    </gazebo>
+
+    <!-- First (shoulder) element of the arm. Fixed to its parent. -->
+    <joint name="${name}_base_joint" type="fixed">
+      <xacro:insert_block name="origin"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <parent link="${base_link}"/>
+      <child link="${name}_base_link"/>
+    </joint>
+
+    <link name="${name}_base_link">
+      <inertial>
+        <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+        <mass value="1.5"/>
+        <inertia ixx="${1e+03*mm2Tom2}"  ixy="0.0"  ixz="0.0" iyy="${1e+03*mm2Tom2}" iyz="0.0" izz="${1e+03*mm2Tom2}" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="${PI_2} 0 0"/>
+        <geometry name="_teleop_link0_visual">
+          <mesh filename="package://arm_description/meshes/_teleop_link0.stl" scale="0.001 0.001 0.001" />
+        </geometry>
+        <material name="Grey"/>
+      </visual>
+      <!--<collision>-->
+        <!--<origin xyz="0 0 0" rpy="${PI_2} 0 0"/>-->
+        <!--<geometry name="_teleop_link0_collision">-->
+          <!--<mesh filename="package://arm_description/meshes/_teleop_link0.stl" scale="0.001 0.001 0.001" />-->
+        <!--</geometry>-->
+      <!--</collision>-->
+    </link>
+
+    <!-- Second segment of the arm. Joint along z-axis -->
+    <joint name="${name}_0_joint" type="revolute">
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <axis xyz="0 0 1"/>
+      <parent link="${name}_base_link"/>
+      <child link="${name}_1_link"/>
+      <limit velocity="11.7" effort="55" lower="-1.75" upper="1.75" />
+      <dynamics friction="0" damping="0.03"/>
+    </joint>
+
+
+<!-- 			LINK 1 			-->
+
+    <link name="${name}_1_link">
+      <inertial>
+        <origin xyz="0.0 ${-20.*mmTom} ${50.*mmTom}" rpy="0 0 0"/>
+        <mass value="0.3"/>
+        <inertia ixx="${1e+03*mm2Tom2}"  ixy="0.0"  ixz="0.0" iyy="${1e+03*mm2Tom2}" iyz="0.0" izz="${800*mm2Tom2}" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="${PI_2} 0 ${-PI_2}"/>
+        <geometry name="_teleop_link1_visual">
+          <mesh filename="package://arm_description/meshes/_teleop_link1.stl" scale="0.001 0.001 0.001" />
+        </geometry>
+        <material name="Purple"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="${PI_2} 0 ${-PI_2}"/>
+        <geometry name="_teleop_link1_collision">
+          <mesh filename="package://arm_description/meshes/_teleop_link1.stl" scale="0.001 0.001 0.001" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${name}_1_joint" type="revolute">
+      <origin xyz="0 0 ${131.5*mmTom}" rpy="0 0 0"/>
+      <axis xyz="0.0 1.0 0.0"/>
+      <parent link="${name}_1_link"/>
+      <child link="${name}_2_link"/>
+      <limit effort="147.0" lower="-2.15" upper="2.15" velocity="5.2"/>
+      <dynamics damping="0.03" friction="0.0"/>
+    </joint>
+
+
+<!-- 			LINK 2 			-->
+
+    <link name="${name}_2_link">
+      <inertial>
+        <origin xyz="0.0 ${10*mmTom} ${180.*mmTom}" rpy="0 0 0"/>
+        <mass value="3.3"/>
+        <inertia ixx="${40e+03*mm2Tom2}"  ixy="0.0"  ixz="0.0" iyy="${40e+03*mm2Tom2}" iyz="0.0" izz="${10e3*mm2Tom2}" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="${PI_2} 0 0"/>
+        <geometry name="_teleop_link2_visual">
+          <mesh filename="package://arm_description/meshes/_teleop_link2.stl" scale="0.001 0.001 0.001" />
+        </geometry>
+        <material name="Grey"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="${PI_2} 0 0"/>
+        <geometry name="_teleop_link2_collision">
+          <mesh filename="package://arm_description/meshes/_teleop_link2.stl" scale="0.001 0.001 0.001" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${name}_2_joint" type="revolute">
+      <origin xyz="0 0 ${365*mmTom}" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+      <parent link="${name}_2_link"/>
+      <child link="${name}_3_link"/>
+      <limit velocity="8.1" effort="127" lower="-2.15" upper="2.15" />
+      <dynamics friction="0" damping="0.03"/>
+    </joint>
+
+
+<!-- 			LINK 3 			-->
+
+    <link name ="${name}_3_link">
+      <inertial>
+        <origin xyz="0.0 ${-20*mmTom} ${50*mmTom}" rpy="0 0 0"/>
+        <mass value="0.3"/>
+        <inertia ixx="${1e+03*mm2Tom2}"  ixy="0.0"  ixz="0.0" iyy="${1e+03*mm2Tom2}" iyz="0.0" izz="${800*mm2Tom2}" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="${PI_2} 0 0"/>
+        <geometry name="_teleop_link3_visual">
+          <mesh filename="package://arm_description/meshes/_teleop_link3.stl" scale="0.001 0.001 0.001" />
+        </geometry>
+        <material name="Purple"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="${PI_2} 0 0"/>
+        <geometry name="_teleop_link3_collision">
+          <mesh filename="package://arm_description/meshes/_teleop_link3.stl" scale="0.001 0.001 0.001" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${name}_3_joint" type="revolute">
+      <origin xyz="0 0 ${100*mmTom}" rpy="0 0 0"/>
+      <axis xyz="0 0 1"/>
+      <parent link="${name}_3_link"/>
+      <child link="${name}_4_link"/>
+      <limit velocity="20.4" effort="28" lower="-2.79" upper="2.79" />
+      <dynamics friction="0" damping="0.03"/>
+    </joint>
+
+
+<!-- 			LINK 4			-->
+
+    <link name ="${name}_4_link">
+      <inertial>
+        <origin xyz="0.0 0.0 ${100*mmTom}" rpy="0 0 0"/>
+        <mass value="2.5"/>
+        <inertia ixx="${1.5e+04*mm2Tom2}"  ixy="0.0"  ixz="0.0" iyy="${1.5e+04*mm2Tom2}" iyz="0.0" izz="${8e3*mm2Tom2}" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="${PI_2} 0 0"/>
+        <geometry name="_teleop_link4_visual">
+          <mesh filename="package://arm_description/meshes/_teleop_link4.stl" scale="0.001 0.001 0.001" />
+        </geometry>
+        <material name="Grey"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="${PI_2} 0 0"/>
+        <geometry name="_teleop_link4_collision">
+          <mesh filename="package://arm_description/meshes/_teleop_link4.stl" scale="0.001 0.001 0.001" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="${name}_4_joint" type="revolute">
+      <origin xyz="0 0 ${226*mmTom}" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+      <parent link="${name}_4_link"/>
+      <child link="${name}_5_link"/>
+      <limit velocity="20.4" effort="28" lower="-1.83" upper="1.83" />
+      <dynamics friction="0" damping="0.03"/>
+    </joint>
+
+
+<!-- 			LINK 5 			-->
+
+    <link name ="${name}_5_link">
+      <inertial>
+        <origin xyz="0.0 0.0 ${150*mmTom}" rpy="0 0 0"/>
+        <mass value="2"/>
+        <inertia ixx="${1.e+04*mm2Tom2}"  ixy="0.0"  ixz="0.0" iyy="${1.e+04*mm2Tom2}" iyz="0.0" izz="${1.e4*mm2Tom2}" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="${PI_2} 0 ${PI}"/>
+        <geometry name="_teleop_link5_visual">
+          <mesh filename="package://arm_description/meshes/_teleop_link5.stl" scale="0.001 0.001 0.001" />
+        </geometry>
+        <material name="Purple"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="${PI_2} 0 ${PI}"/>
+        <geometry name="_teleop_link5_collision">
+          <mesh filename="package://arm_description/meshes/_teleop_link5.stl" scale="0.001 0.001 0.001" />
+        </geometry>
+      </collision>
+    </link>
+
+    <!--<link name="TCP"/>-->
+    <!--<joint name="TCP_joint" type="fixed">-->
+      <!--<origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.27"/>-->
+      <!--<parent link="_teleop_link5"/>-->
+      <!--<child link="TCP"/>-->
+    <!--</joint>-->
+  <!--</robot>-->
+
+
+    <xacro:kuka_lwr_gazebo name="${name}"/>
+    <xacro:kuka_lwr_transmission name="${name}"/>
+  </xacro:macro>
+
+  <!-- using the models -->
+  <xacro:teleop_arm name="lwr">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:teleop_arm>
+
+</robot>

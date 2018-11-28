@@ -34,7 +34,7 @@ public:
 
 private:
 
-    int n_joints_ = 6;
+    int n_joints_ = 5;
 
     std::vector<hardware_interface::JointStateHandle> joint_state_;
 
