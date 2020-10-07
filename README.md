@@ -116,7 +116,7 @@ after compling them are ready to run the lwr_simple_example.
 
 Open a new terminal and run the following:
 ```sh
-$ roslaunch lwr_simple_example sim.launch
+roslaunch lwr_simple_example sim.launch
 ```
 This will run the simulator and the Gazebo simulator and ROS Rviz visualiser GUIs should both open. If the Gazebo 
 window does not open this is because a flag is set in the sim.launch file. In the
@@ -136,7 +136,7 @@ $ roslaunch lwr_simple_example console.launch
 or:
 ```
 rosservice call /action_client/kuka_action_cmd "name_action" (example linear)
-``
+```
 
 You should have the following triptych view in your console
 ![alt text](readme/console.png "Triptych console view")
