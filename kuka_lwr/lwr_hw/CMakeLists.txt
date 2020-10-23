@@ -14,7 +14,6 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   tf
   urdf
-  cmake_modules
   pluginlib
   kdl_parser
   transmission_interface
@@ -35,7 +34,6 @@ catkin_package(
     roscpp
     tf
     urdf
-    cmake_modules
     pluginlib
     kdl_parser
     transmission_interface
