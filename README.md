@@ -127,11 +127,11 @@ caption below Rviz is on the left and Gazebo is on the right.
 Now that the simulations are up and running we are ready to control the robot.
 In on terminal run the following:
 ```sh
-$ roslaunch lwr_simple_example client.launch
+roslaunch lwr_simple_example client.launch
 ```
 and in another:
 ```sh
-$ roslaunch lwr_simple_example console.launch
+roslaunch lwr_simple_example console.launch
 ```
 or:
 ```
